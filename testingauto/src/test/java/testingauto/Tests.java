@@ -35,23 +35,28 @@ public class Tests {
 	@Test
 	public void pruebaUno() {
 		PageLogin pageLogin = new PageLogin(driver);
-		pageLogin.login("user", "user");		
-		pageLogin.currentPage("mercurysignon.php");
+		PageLogon pageLogon = new PageLogon(driver);
+		pageLogin.login("user", "user");	
+		pageLogon.assertLogonPage();
 		
 	}
 	
 	@Test
 	public void pruebaDos() {
 		PageLogin pageLogin = new PageLogin(driver);
+		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
-		pageLogin.currentPage("");
+		pageReservation.assertPage();
 		
 	}
 	@Test
 	public void pruebaTres() {
-		
-		
-		
+		PageLogin pageLogin = new PageLogin(driver);
+		PageReservation pageReservation = new PageReservation(driver);
+		pageLogin.login("mercury", "mercury");
+		pageReservation.selectPassengers(2);
+		pageReservation.selectFromPort(3);
+		pageReservation.selecttoPort("London");
 	}
 	
 	@AfterMethod

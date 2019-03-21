@@ -1,5 +1,7 @@
 package pages;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -27,32 +29,12 @@ public class PageLogin {
 		driver.findElement(userField).sendKeys(user);
 		driver.findElement(pwdField).sendKeys(pass);
 		driver.findElement(loginButton).click();
-		Helpers helper = new Helpers();
-		helper.sleepSeconds(4);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		/*Helpers helper = new Helpers();
+		helper.sleepSeconds(4);*/
 		
 	}
 	
-	public void currentPage(String name) {
-		
-		switch(name) {
-		
-		case "mercurysignon.php":
-			PageLogon pageLogon = new PageLogon(driver);
-			pageLogon.assertLogonPage();
-			break;
-		case "":
-			PageReservation pageReservation = new PageReservation(driver);
-			pageReservation.assertPage();
-			break;
-		default:
-			break;
-		
-		
-		}
-		
-		
-		
-	}
 	
 
 }
