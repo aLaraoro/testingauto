@@ -47,6 +47,13 @@ public class Tests {
 		pageLogin.currentPage("");
 		
 	}
+	@Test
+	public void pruebaTres() {
+		
+		
+		
+	}
+	
 	@AfterMethod
 	public void tearDown() {
 		
