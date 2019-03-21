@@ -14,14 +14,14 @@ import helpers.*;
 import pages.*;
 
 public class Tests {
-	
+
 	private WebDriver driver;
-	
+
 	@BeforeMethod
 	public void setUp() {
-		
+
 		DesiredCapabilities caps = new DesiredCapabilities();
-		 String exePath = "Chrome Driver\\chromedriver.exe";
+		String exePath = "Chrome Driver\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
@@ -29,8 +29,8 @@ public class Tests {
 		Helpers helper = new Helpers();
 		helper.sleepSeconds(5);
 
-		
-		
+
+
 	}
 	@Test
 	public void pruebaUno() {
@@ -38,16 +38,16 @@ public class Tests {
 		PageLogon pageLogon = new PageLogon(driver);
 		pageLogin.login("user", "user");	
 		pageLogon.assertLogonPage();
-		
+
 	}
-	
+
 	@Test
 	public void pruebaDos() {
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
 		pageReservation.assertPage();
-		
+
 	}
 	@Test
 	public void pruebaTres() {
@@ -58,12 +58,12 @@ public class Tests {
 		pageReservation.selectFromPort(3);
 		pageReservation.selecttoPort("London");
 	}
-	
+
 	@AfterMethod
 	public void tearDown() {
-		
+
 		driver.close();
-		
+
 	}
 
 }
