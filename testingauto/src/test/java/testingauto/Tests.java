@@ -42,6 +42,7 @@ public class Tests {
 
 	@Test
 	public void incorrectLogin() {
+		System.out.println("incorrect Login");
 		PageLogin pageLogin = new PageLogin(driver);
 		PageLogon pageLogon = new PageLogon(driver);
 		pageLogin.login("user", "user");	
@@ -51,6 +52,7 @@ public class Tests {
 
 	@Test
 	public void correctLogin() {
+		System.out.println("correct Login");
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercur");
@@ -59,10 +61,10 @@ public class Tests {
 	}
 	@Test
 	public void flyRegistration() {
+		System.out.println("reservation");
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
-		pageReservation.assertPage();
 		pageReservation.selectPassengers(2);
 		pageReservation.selectFromPort(3);
 		pageReservation.selecttoPort("London");
@@ -70,7 +72,7 @@ public class Tests {
 	
 	@Test
 	public void pruebaCantidadDeCampos() {
-		
+		System.out.println("Verify fields");
 		PageLogin pageLogin = new PageLogin(driver);
 		
 		pageLogin.verifyFields();
@@ -85,7 +87,7 @@ public class Tests {
 			try {
 				System.out.println("Creando captura");
 				
-				FileUtils.copyFile(myScreenshot, new File("LOGIN " + System.currentTimeMillis()  + ".png"));
+				FileUtils.copyFile(myScreenshot, new File("Error " + System.currentTimeMillis()  + ".png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
