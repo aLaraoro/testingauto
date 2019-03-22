@@ -56,7 +56,7 @@ public class Tests {
 	public void correctLogin() {
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
-		pageLogin.login("mercury", "mercury");
+		pageLogin.login("mercury", "mercur");
 		pageReservation.assertPage();
 
 	}
