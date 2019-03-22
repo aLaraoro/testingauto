@@ -1,6 +1,15 @@
 package testingauto;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -16,7 +25,8 @@ import pages.*;
 public class Tests {
 
 	private WebDriver driver;
-
+	
+	
 	@BeforeMethod
 	public void setUp() {
 
@@ -29,11 +39,12 @@ public class Tests {
 		Helpers helper = new Helpers();
 		helper.sleepSeconds(5);
 
-
-
 	}
+		
+		
+
 	@Test
-	public void pruebaUno() {
+	public void incorrectLogin() {
 		PageLogin pageLogin = new PageLogin(driver);
 		PageLogon pageLogon = new PageLogon(driver);
 		pageLogin.login("user", "user");	
@@ -42,7 +53,7 @@ public class Tests {
 	}
 
 	@Test
-	public void pruebaDos() {
+	public void correctLogin() {
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
@@ -50,18 +61,40 @@ public class Tests {
 
 	}
 	@Test
-	public void pruebaTres() {
+	public void flyRegistration() {
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
+		pageReservation.assertPage();
 		pageReservation.selectPassengers(2);
 		pageReservation.selectFromPort(3);
 		pageReservation.selecttoPort("London");
 	}
+	
+	@Test
+	public void pruebaCantidadDeCampos() {
+		
+		PageLogin pageLogin = new PageLogin(driver);
+		
+		pageLogin.verifyFields();
+		
+	}
 
 	@AfterMethod
-	public void tearDown() {
-
+	public void tearDown(ITestResult result) {
+		
+		if(!result.isSuccess()) {
+			File myScreenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+			try {
+				System.out.println("Creando captura");
+				
+				FileUtils.copyFile(myScreenshot, new File("LOGIN " + System.currentTimeMillis()  + ".png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		driver.close();
 
 	}
