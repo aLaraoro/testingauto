@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -31,7 +32,9 @@ public class Tests {
 		String exePath = "Chrome Driver\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
-		driver.manage().window().maximize();
+		//driver.manage().window().maximize();
+		//driver.manage().window().fullscreen();
+		driver.manage().window().setSize(new Dimension(800,600));
 		driver.navigate().to("http://newtours.demoaut.com/");
 		Helpers helper = new Helpers();
 		helper.sleepSeconds(5);
@@ -55,7 +58,7 @@ public class Tests {
 		System.out.println("correct Login");
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
-		pageLogin.login("mercury", "mercur");
+		pageLogin.login("mercury", "mercury");
 		pageReservation.assertPage();
 
 	}
