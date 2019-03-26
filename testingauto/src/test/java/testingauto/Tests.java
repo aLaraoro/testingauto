@@ -2,10 +2,12 @@ package testingauto;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,8 +35,11 @@ public class Tests {
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
 		//driver.manage().window().maximize();
-		//driver.manage().window().fullscreen();
-		driver.manage().window().setSize(new Dimension(800,600));
+		driver.manage().window().fullscreen();
+		//driver.manage().window().setSize(new Dimension(200,400));
+		
+		
+		
 		driver.navigate().to("http://newtours.demoaut.com/");
 		Helpers helper = new Helpers();
 		helper.sleepSeconds(5);
@@ -43,7 +48,7 @@ public class Tests {
 		
 		
 
-	@Test
+	/*@Test
 	public void incorrectLogin() {
 		System.out.println("incorrect Login");
 		PageLogin pageLogin = new PageLogin(driver);
@@ -51,7 +56,7 @@ public class Tests {
 		pageLogin.login("user", "user");	
 		pageLogon.assertLogonPage();
 
-	}
+	}*/
 
 	@Test
 	public void correctLogin() {
@@ -61,7 +66,7 @@ public class Tests {
 		pageLogin.login("mercury", "mercury");
 		pageReservation.assertPage();
 
-	}
+	}/*
 	@Test
 	public void flyRegistration() {
 		System.out.println("reservation");
@@ -80,7 +85,7 @@ public class Tests {
 		
 		pageLogin.verifyFields();
 		
-	}
+	}*/
 
 	@AfterMethod
 	public void tearDown(ITestResult result) {

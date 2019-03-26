@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite, 1 failed test</span>
+      <span class="top-banner-font-1">1 suite</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -38,7 +38,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-testingauto.Tests">
-              <span class="suite-name border-failed">testingauto.Tests</span>
+              <span class="suite-name border-passed">testingauto.Tests</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -91,21 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">4 methods, 1 failed,   3 passed</span>
-                  </li>
-                  <li>
-                    <span class="method-list-title failed">Failed methods</span>
-                    <span class="show-or-hide-methods failed">
-                      <a href="#" panel-name="suite-testingauto.Tests" class="hide-methods failed suite-testingauto.Tests"> (hide)</a> <!-- hide-methods failed suite-testingauto.Tests -->
-                      <a href="#" panel-name="suite-testingauto.Tests" class="show-methods failed suite-testingauto.Tests"> (show)</a> <!-- show-methods failed suite-testingauto.Tests -->
-                    </span>
-                    <div class="method-list-content failed suite-testingauto.Tests">
-                      <span>
-                        <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="correctLogin">correctLogin</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                    </div> <!-- method-list-content failed suite-testingauto.Tests -->
+                    <span class="method-stats">1 method,   1 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -116,17 +102,7 @@
                     <div class="method-list-content passed suite-testingauto.Tests">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="flyRegistration">flyRegistration</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="incorrectLogin">incorrectLogin</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="pruebaCantidadDeCampos">pruebaCantidadDeCampos</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="correctLogin">correctLogin</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-testingauto.Tests -->
@@ -141,48 +117,6 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-testingauto.Tests" class="panel testingauto.Tests">
-          <div class="suite-testingauto.Tests-class-failed">
-            <div class="main-panel-header rounded-window-top">
-              <img src="failed.png"/>
-              <span class="class-name">testingauto.Tests</span>
-            </div> <!-- main-panel-header rounded-window-top -->
-            <div class="main-panel-content rounded-window-bottom">
-              <div class="method">
-                <div class="method-content">
-                  <a name="correctLogin">
-                  </a> <!-- correctLogin -->
-                  <span class="method-name">correctLogin</span>
-                  <div class="stack-trace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/font&quot;}
-  (Session info: chrome=73.0.3683.86)
-  (Driver info: chromedriver=2.44.609538 (b655c5a60b0b544917107a59d4153d4bf78e1b90),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 0 milliseconds
-For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
-System info: host: &apos;LAB3&apos;, ip: &apos;10.236.115.139&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_201&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.44.609538 (b655c5a60b0b54..., userDataDir: C:\Users\Julia\AppData\Loca...}, cssSelectorsEnabled: true, databaseEnabled: false, goog:chromeOptions: {debuggerAddress: localhost:52963}, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: XP, platformName: XP, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: ignore, unhandledPromptBehavior: ignore, version: 73.0.3683.86, webStorageEnabled: true}
-Session ID: 8444001b885520f68b5a5d527087fe17
-*** Element info: {Using=xpath, value=/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/font}
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:214)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:166)
-	at org.openqa.selenium.remote.http.JsonHttpResponseCodec.reconstructValue(JsonHttpResponseCodec.java:40)
-	at org.openqa.selenium.remote.http.AbstractHttpResponseCodec.decode(AbstractHttpResponseCodec.java:80)
-	at org.openqa.selenium.remote.http.AbstractHttpResponseCodec.decode(AbstractHttpResponseCodec.java:44)
-	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-	at pages.PageReservation.assertPage(PageReservation.java:32)
-	at testingauto.Tests.correctLogin(Tests.java:62)
-... Removed 38 stack frames
-</div> <!-- stack-trace -->
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-            </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-testingauto.Tests-class-failed -->
           <div class="suite-testingauto.Tests-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
@@ -191,23 +125,9 @@ Session ID: 8444001b885520f68b5a5d527087fe17
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="flyRegistration">
-                  </a> <!-- flyRegistration -->
-                  <span class="method-name">flyRegistration</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="incorrectLogin">
-                  </a> <!-- incorrectLogin -->
-                  <span class="method-name">incorrectLogin</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="pruebaCantidadDeCampos">
-                  </a> <!-- pruebaCantidadDeCampos -->
-                  <span class="method-name">pruebaCantidadDeCampos</span>
+                  <a name="correctLogin">
+                  </a> <!-- correctLogin -->
+                  <span class="method-name">correctLogin</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -263,28 +183,16 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(4);
+data.addRows(1);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'correctLogin')
 data.setCell(0, 2, 'testingauto.Tests')
-data.setCell(0, 3, 12234);
-data.setCell(1, 0, 1)
-data.setCell(1, 1, 'flyRegistration')
-data.setCell(1, 2, 'testingauto.Tests')
-data.setCell(1, 3, 5400);
-data.setCell(2, 0, 2)
-data.setCell(2, 1, 'incorrectLogin')
-data.setCell(2, 2, 'testingauto.Tests')
-data.setCell(2, 3, 1893);
-data.setCell(3, 0, 3)
-data.setCell(3, 1, 'pruebaCantidadDeCampos')
-data.setCell(3, 2, 'testingauto.Tests')
-data.setCell(3, 3, 38);
+data.setCell(0, 3, 23206);
 window.suiteTableData['testingauto.Tests']= { tableData: data, tableDiv: 'times-div-testingauto.Tests'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 19 seconds</span>
+              <span class="suite-total-time">Total running time: 23 seconds</span>
               <div id="times-div-testingauto.Tests">
               </div> <!-- times-div-testingauto.Tests -->
             </div> <!-- times-div -->
@@ -316,50 +224,12 @@ return data;
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
-                <img src="failed.png">
-                </img>
                 <span class="method-name">correctLogin</span>
-                <span class="method-start">21124 ms</span>
+                <span class="method-start">22188 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=correctLogin status=FAILURE method=Tests.correctLogin()[pri:0, instance:testingauto...)</span>
-                <span class="method-start">33394 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">34287 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <span class="method-name">flyRegistration</span>
-                <span class="method-start">44828 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=flyRegistration status=SUCCESS method=Tests.flyRegistration()[pri:0, instance:testi...)</span>
-                <span class="method-start">50229 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">50292 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <span class="method-name">incorrectLogin</span>
-                <span class="method-start">62537 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=incorrectLogin status=SUCCESS method=Tests.incorrectLogin()[pri:0, instance:testing...)</span>
-                <span class="method-start">64430 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">64603 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <span class="method-name">pruebaCantidadDeCampos</span>
-                <span class="method-start">78631 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=pruebaCantidadDeCampos status=SUCCESS method=Tests.pruebaCantidadDeCampos()[pri:0, ...)</span>
-                <span class="method-start">78669 ms</span>
+                <span class="method-name">tearDown([TestResult name=correctLogin status=SUCCESS method=Tests.correctLogin()[pri:0, instance:testingauto...)</span>
+                <span class="method-start">45395 ms</span>
               </div> <!-- configuration-method after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
