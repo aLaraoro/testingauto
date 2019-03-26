@@ -2,10 +2,12 @@ package testingauto;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
@@ -25,6 +27,7 @@ import pages.PageReservation;
 public class Tests {
 
 	private WebDriver driver;
+	ArrayList<String> tabs;
 	
 	
 	@BeforeMethod
@@ -35,38 +38,44 @@ public class Tests {
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
 		//driver.manage().window().maximize();
-		driver.manage().window().fullscreen();
+		driver.manage().window().maximize();
 		//driver.manage().window().setSize(new Dimension(200,400));
 		
 		
-		
 		driver.navigate().to("http://newtours.demoaut.com/");
-		Helpers helper = new Helpers();
-		helper.sleepSeconds(5);
+		JavascriptExecutor jsExe = (JavascriptExecutor) driver;
+		String googleWin = "window.open('http://www.google.com')";
+		jsExe.executeScript(googleWin);
+		tabs = new ArrayList<String> (driver.getWindowHandles());
+		/*Helpers helper = new Helpers();
+		helper.sleepSeconds(5);*/
 
 	}
 		
 		
 
-	/*@Test
+	@Test
 	public void incorrectLogin() {
-		System.out.println("incorrect Login");
+
+		
+		driver.switchTo().window(tabs.get(1)).navigate().to("http://www.youtube.com/user/Draculinio");
+		driver.switchTo().window(tabs.get(0));
 		PageLogin pageLogin = new PageLogin(driver);
 		PageLogon pageLogon = new PageLogon(driver);
 		pageLogin.login("user", "user");	
 		pageLogon.assertLogonPage();
 
-	}*/
+	}
 
-	@Test
+	/*@Test
 	public void correctLogin() {
-		System.out.println("correct Login");
+		
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
 		pageReservation.assertPage();
 
-	}/*
+	}
 	@Test
 	public void flyRegistration() {
 		System.out.println("reservation");
@@ -102,8 +111,11 @@ public class Tests {
 			}
 			
 		}
-		driver.close();
-
+		for(int j=0;j<tabs.size();j++) {
+			
+			driver.switchTo().window(tabs.get(j)).close();
+			
+		}
 	}
 
 }
