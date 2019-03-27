@@ -3,20 +3,27 @@ package pages;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-import helpers.Helpers;
+import data.Data;
+
 
 public class PageLogin {
 
@@ -24,7 +31,11 @@ public class PageLogin {
 	private By userField;
 	private By pwdField;
 	private By loginButton;
+	private By signOn;
 	private By fields;
+	private String username = "userName";
+	private String pass = "password";
+	ArrayList<String> tabs;
 	
 	
 	public PageLogin(WebDriver driver) {
@@ -34,10 +45,48 @@ public class PageLogin {
 		pwdField = By.name("password");
 		loginButton = By.name("login");
 		fields = By.tagName("input");
+		signOn = By.partialLinkText("SIGN-ON");
+	}
+	
+	
+	public void loginXTimes(String url) throws Exception {
+		Data data = new Data("./data.xlsx");
+		List<Map<String,String>> list = data.getData();
+		
+		
+		tabs = new ArrayList<String> (driver.getWindowHandles());
+		for(int i=0;i<list.size();i++) {
+			
+			JavascriptExecutor jsExe = (JavascriptExecutor) driver;
+			String googleWin = "window.open('"+url+"')";
+			jsExe.executeScript(googleWin);
+			
+			
+			
+		}
+		
+		driver.switchTo().window(tabs.get(0)).close();
+		
+		tabs = new ArrayList<String> (driver.getWindowHandles());
+		for(int j=0;j<tabs.size();j++) {
+			String usernameList = list.get(j).get(username);
+			String passList = list.get(j).get(pass);
+			driver.switchTo().window(tabs.get(j));
+			driver.findElement(signOn).click();
+			
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.findElement(userField).sendKeys(usernameList);
+			driver.findElement(pwdField).sendKeys(passList);
+			driver.findElement(loginButton).click();
+
+		}
+		
+	
+		
+		
 	}
 
 	public void login(String user, String pass) {
-
 
 		driver.findElement(userField).sendKeys(user);
 		driver.findElement(pwdField).sendKeys(pass);

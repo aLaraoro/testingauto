@@ -28,7 +28,7 @@ public class PageReservation {
 	}
 
 	public void assertPage() {
-
+		
 		Assert.assertTrue(driver.findElement(titleText).getText().contains("Flight Finder"));
 
 	}

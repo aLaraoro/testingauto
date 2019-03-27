@@ -1,10 +1,12 @@
 package testingauto;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
+
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -23,14 +25,17 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import data.Data;
 import pages.PageLogin;
 import pages.PageLogon;
+import pages.PageReservation;
+
 
 public class Tests {
 
 	private WebDriver driver;
+	private Data data;
 	ArrayList<String> tabs;
-	public static final String SAMPLE_XLSX_FILE_PATH = "./data.xlsx";
 	
 	@BeforeMethod
 	public void setUp() throws IOException, Exception, InvalidFormatException {
@@ -40,59 +45,64 @@ public class Tests {
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
 		//driver.manage().window().maximize();
-		driver.manage().window().maximize();
+		//driver.manage().window().maximize();
+		
+
+		
 		//driver.manage().window().setSize(new Dimension(200,400));
-        // Creating a Workbook from an Excel file (.xls or .xlsx)
-        Workbook workbook = WorkbookFactory.create(new File(SAMPLE_XLSX_FILE_PATH));
-
-        // Retrieving the number of sheets in the Workbook
-        System.out.println("Workbook has " + workbook.getNumberOfSheets() + " Sheets : ");
-        
-     // Getting the Sheet at index zero
-        Sheet sheet = workbook.getSheetAt(0);
-
-        // Create a DataFormatter to format and get each cell's value as String
-        DataFormatter dataFormatter = new DataFormatter();
-
-        // 1. You can obtain a rowIterator and columnIterator and iterate over them
-        System.out.println("\n\nIterating over Rows and Columns using Iterator\n");
-        Iterator<Row> rowIterator = sheet.rowIterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-
-            // Now let's iterate over the columns of the current row
-            Iterator<Cell> cellIterator = row.cellIterator();
-
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                String cellValue = dataFormatter.formatCellValue(cell);
-                System.out.print(cellValue + "\t");
-            }
-            System.out.println();
-        }
+       
 		driver.navigate().to("http://newtours.demoaut.com/");
-		JavascriptExecutor jsExe = (JavascriptExecutor) driver;
-		String googleWin = "window.open('http://www.google.com')";
-		jsExe.executeScript(googleWin);
-		tabs = new ArrayList<String> (driver.getWindowHandles());
+
 		/*Helpers helper = new Helpers();
 		helper.sleepSeconds(5);*/
 
 	}
 		
 		
-
+	/*
 	@Test
 	public void incorrectLogin() {
 
-		
-		driver.switchTo().window(tabs.get(1)).navigate().to("http://www.youtube.com/user/Draculinio");
-		driver.switchTo().window(tabs.get(0));
 		PageLogin pageLogin = new PageLogin(driver);
 		PageLogon pageLogon = new PageLogon(driver);
 		pageLogin.login("user", "user");	
 		pageLogon.assertLogonPage();
 
+	}*/
+	
+	
+	@Test
+	public void multipleLogin() throws Exception {
+		PageLogin pageLogin = new PageLogin(driver);
+		data = new Data("./data.xlsx");
+		List<Map<String,String>> list = data.getData();
+		pageLogin.loginXTimes("http://newtours.demoaut.com/");
+		
+		
+		
+		tabs = new ArrayList<String> (driver.getWindowHandles());
+		
+		for(int k=0;k<tabs.size();k++) {
+			
+			driver.switchTo().window(tabs.get(k));
+			Boolean result = Boolean.parseBoolean(list.get(k).get("assert"));
+			System.out.println(result);
+			if(result) {
+				
+				PageReservation pageReservation = new PageReservation(driver);
+				pageReservation.assertPage();
+				
+			}else {
+				
+				PageLogon pageLogon = new PageLogon(driver);
+				pageLogon.assertLogonPage();
+			}
+			
+			driver.switchTo().window(tabs.get(k)).close();
+			
+		}
+		
+		
 	}
 
 	/*@Test
@@ -125,7 +135,7 @@ public class Tests {
 	}*/
 
 	@AfterMethod
-	public void tearDown(ITestResult result) {
+	public void tearDown(ITestResult result) throws FileNotFoundException, IOException {
 		
 		if(!result.isSuccess()) {
 			File myScreenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -139,11 +149,10 @@ public class Tests {
 			}
 			
 		}
-		for(int j=0;j<tabs.size();j++) {
-			
-			driver.switchTo().window(tabs.get(j)).close();
-			
-		}
+		
+		ArrayList<Object> list = new ArrayList<Object>();
+		data.insertRow(list);
+
 	}
 
 }
