@@ -25,6 +25,8 @@ public class PageLogin {
 	private By pwdField;
 	private By loginButton;
 	private By fields;
+	
+	
 	public PageLogin(WebDriver driver) {
 
 		this.driver = driver;
