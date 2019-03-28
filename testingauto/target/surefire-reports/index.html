@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,   1 passed</span>
+                    <span class="method-stats">2 methods,   2 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -100,6 +100,11 @@
                       <a href="#" panel-name="suite-testingauto.Tests" class="show-methods passed suite-testingauto.Tests"> (show)</a> <!-- show-methods passed suite-testingauto.Tests -->
                     </span>
                     <div class="method-list-content passed suite-testingauto.Tests">
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="correctLogin">correctLogin</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
                       <span>
                         <img width="3%" src="passed.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="multipleLogin">multipleLogin</a> <!-- method navigator-link -->
@@ -123,6 +128,13 @@
               <span class="class-name">testingauto.Tests</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="correctLogin">
+                  </a> <!-- correctLogin -->
+                  <span class="method-name">correctLogin</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
                   <a name="multipleLogin">
@@ -183,16 +195,20 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
+data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'multipleLogin')
 data.setCell(0, 2, 'testingauto.Tests')
-data.setCell(0, 3, 27464);
+data.setCell(0, 3, 67738);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'correctLogin')
+data.setCell(1, 2, 'testingauto.Tests')
+data.setCell(1, 3, 33330);
 window.suiteTableData['testingauto.Tests']= { tableData: data, tableDiv: 'times-div-testingauto.Tests'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 27 seconds</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-testingauto.Tests">
               </div> <!-- times-div-testingauto.Tests -->
             </div> <!-- times-div -->
@@ -224,12 +240,24 @@ return data;
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
+                <span class="method-name">correctLogin</span>
+                <span class="method-start">8779 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">tearDown([TestResult name=correctLogin status=SUCCESS method=Tests.correctLogin()[pri:0, instance:testingauto...)</span>
+                <span class="method-start">42112 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">42816 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
                 <span class="method-name">multipleLogin</span>
-                <span class="method-start">13285 ms</span>
+                <span class="method-start">47893 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">tearDown([TestResult name=multipleLogin status=SUCCESS method=Tests.multipleLogin()[pri:0, instance:testingau...)</span>
-                <span class="method-start">40751 ms</span>
+                <span class="method-start">115631 ms</span>
               </div> <!-- configuration-method after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

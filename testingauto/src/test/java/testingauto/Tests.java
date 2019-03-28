@@ -3,8 +3,10 @@ package testingauto;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
 import java.util.*;
 
@@ -83,7 +85,7 @@ public class Tests {
 	public void multipleLogin() throws Exception {
 		PageLogin pageLogin = new PageLogin(driver);
 		
-		pageLogin.loginXTimes("http://newtours.demoaut.com/");
+		pageLogin.loginXTimes("http://newtours.demoaut.com/", list);
 		
 		
 		
@@ -111,15 +113,16 @@ public class Tests {
 		
 	}
 
-	/*@Test
+	@Test
 	public void correctLogin() {
 		
 		PageLogin pageLogin = new PageLogin(driver);
 		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.login("mercury", "mercury");
 		pageReservation.assertPage();
+		driver.close();
 
-	}
+	}/*
 	@Test
 	public void flyRegistration() {
 		System.out.println("reservation");
@@ -155,16 +158,29 @@ public class Tests {
 			}
 			
 		}
+		
+		String message = "null";
+		String cause = "null";
+		if (result.getThrowable() != null) {
+			
+			message = result.getThrowable().getMessage();
+			cause = result.getThrowable().getCause().toString();
+			
+		}
+		
 		String tcName = result.getName();
-		Boolean success = result.isSuccess();
-		ArrayList<Object> list = new ArrayList<Object>();
+		Boolean resultSuc = result.isSuccess();
+		String success = resultSuc.toString();
+		ArrayList<String> list = new ArrayList<String>();
 		LocalDateTime date = LocalDateTime.now();
 		String day = this.getDateOrTime(date,true);
 		String hour = this.getDateOrTime(date,false);
 		list.add(tcName);
-		list.add(success);
 		list.add(day);
 		list.add(hour);
+		list.add(success);
+		list.add(message);
+		list.add(cause);
 		data.insertRow(list);
 
 	}
@@ -173,28 +189,25 @@ public class Tests {
 	public String getDateOrTime(LocalDateTime timeDate, Boolean isDate) {
 		
 		String date = "";
-		String a="";
-		String b="";
-		String c="";
-		
-		String sep = "";
+
+		String pattern;
 		
 		if(isDate) {
-			a=String.format("d", timeDate.getDayOfMonth());
-			b= String.format("m", timeDate.getMonthValue());
-			c= String.format("Y", timeDate.getYear());
-			sep = "/";	
+			
+			pattern = "dd-MM-yyyy";
+			DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern(pattern);
+			
+			date = timeDate.format(simpleDateFormat);
 			
 			
 		}else {
 			
-			a=String.format("H", timeDate.getDayOfMonth());
-			b= String.format("M", timeDate.getMinute());;
-			c= String.format("S", timeDate.getSecond());;
-			sep = ":";	
+			pattern = "HH:mm:ss";
+			DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern(pattern);
+			
+			date = timeDate.format(simpleDateFormat);
 			
 		}
-		date += a + sep + b + sep + c;
 		
 		
 		

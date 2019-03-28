@@ -15,10 +15,13 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Data {
@@ -101,15 +104,18 @@ public class Data {
 		
 	}
 	
-	public void insertRow(List<Object> list) throws FileNotFoundException, IOException {
+	public void insertRow(List<String> list) throws FileNotFoundException, IOException {
 		Workbook newWorkBook = new XSSFWorkbook();
 		int count = workbook.getNumberOfSheets();
 		DataFormatter dataFormatter = new DataFormatter();
 		FileOutputStream output = new FileOutputStream(data);
 		Sheet sheet = null;
-		for(int i=0;i<numSheets;i++) {
+		System.out.println(count);
+		for(int i=0;i<count;i++) {
 			
 			Sheet sheet1 = newWorkBook.createSheet();
+			String name = workbook.getSheetName(i).toString();
+			newWorkBook.setSheetName(i, name);
 			Sheet oldSheet = workbook.getSheetAt(i);
 			createSheetContent(oldSheet,sheet1);
 			
@@ -118,26 +124,26 @@ public class Data {
 			
 			sheet = newWorkBook.createSheet("Result");
 
-			List<Object> names = new ArrayList<Object>();
+			List<String> names = new ArrayList<String>();
+			
 			names.add("TC Name");
-			names.add("Success");
 			names.add("Day");
 			names.add("Time");
-			
+			names.add("Success");
+			names.add("Message");
+			names.add("Cause");
 			this.createRow(0, names, sheet);
 			this.createRow(1, list, sheet);
-			
-			
-			
+						
 			System.out.println("Numero hojas: "+newWorkBook.getNumberOfSheets());
-			
 
 			
 		}else {
 			
-			sheet = newWorkBook.getSheet("Result");
+			sheet = newWorkBook.getSheetAt(1);
 			int n = sheet.getLastRowNum();
 			System.out.println(n);
+			this.createRow(n+1, list, sheet);
 			
 		}
 		
@@ -148,59 +154,59 @@ public class Data {
 		
 	}
 	
-	public void createRow(int a, List<Object> arrayList, Sheet sheet) {
+	public void createRow(int a, List<String> arrayList, Sheet sheet) {
+		System.out.println(a);
 		
+		//Crea fila en sheet
 		sheet.createRow(a);
 		
+		//Selecciona la fila
 		Row row = sheet.getRow(a);
 		
 		for(int i=0;i<arrayList.size();i++) {
-			
+			//Crea una celda
 			row.createCell(i);
+			
+			//Selecciona celda, estilo de fuente
 			Cell cell = row.getCell(i);
-			int widt = 0;
-			if(a==0 || i==0) {
-				String cellValue = (String) arrayList.get(i);
+
+			
+			//inicia variable tamaño celda
+			int width = (int) sheet.getColumnWidth(i)/255;
+			int widt=0;
+			String cellValue =  arrayList.get(i);
+			//Get value and insert into cell
+			if(a==0 || i==0 || i==1) {
+				
+				//Titles, TC name cells and boolean
+				
 				cell.setCellType(CellType.STRING);
-				cell.setCellValue(cellValue);
-				widt += cellValue.length();
+
 				
-			}else {
+			}else{
 				
-				if(i==1) {
-					Boolean cellValue = (Boolean) arrayList.get(i);
-					cell.setCellType(CellType.BOOLEAN);
-					cell.setCellValue(cellValue);
-					widt += cellValue.toString().length();
-					
-				}else{
-					String cellValue = (String) arrayList.get(i);
-					cell.setCellType(CellType.NUMERIC);
-					cell.setCellValue(cellValue);
-					widt += cellValue.length();
-					
-				}
+				//DateTime values
+				cell.setCellType(CellType.NUMERIC);
+
 				
 			}
+			cell.setCellValue(cellValue);
+			widt = cellValue.length();
 			
-			
-			
-			int width = sheet.getColumnWidth(i);
-			
-			System.out.println(width + " vs " + widt);
 			if(widt > width) {
-				System.out.println("Texto es mayor que celda");
-				width = widt;
-								
+				
+				width = widt+1;
+				
+			}else if(widt == width) {
+				
+				width++;
+				
 			}
 			
-			sheet.setColumnWidth(i, width+40);
 			
 			
-			
-			
-			
-			
+			sheet.setColumnWidth(i, width*255);
+			sheet.setColumnHidden(i, false);
 			
 			
 		}
@@ -233,8 +239,7 @@ public class Data {
 		
 		
 	}
-	
-	
+		
 	public boolean RowEmptyValue(Row row,DataFormatter dataFormatter) {
 		
 		Boolean empty = false;

@@ -49,9 +49,8 @@ public class PageLogin {
 	}
 	
 	
-	public void loginXTimes(String url) throws Exception {
+	public void loginXTimes(String url, List<Map<String,String>> list) throws Exception {
 		Data data = new Data("./data.xlsx");
-		List<Map<String,String>> list = data.getData();
 		
 		
 		tabs = new ArrayList<String> (driver.getWindowHandles());
@@ -72,7 +71,6 @@ public class PageLogin {
 			String usernameList = list.get(j).get(username);
 			String passList = list.get(j).get(pass);
 			driver.switchTo().window(tabs.get(j));
-			driver.findElement(signOn).click();
 			
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.findElement(userField).sendKeys(usernameList);
