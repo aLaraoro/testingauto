@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="testingauto.Tests" duration-ms="91451" started-at="2019-03-27T13:59:03Z" finished-at="2019-03-27T14:00:35Z">
+  <suite name="testingauto.Tests" duration-ms="42251" started-at="2019-03-28T09:23:44Z" finished-at="2019-03-28T09:24:26Z">
     <groups>
     </groups>
-    <test name="Command line test" duration-ms="91451" started-at="2019-03-27T13:59:03Z" finished-at="2019-03-27T14:00:35Z">
+    <test name="Command line test" duration-ms="42251" started-at="2019-03-28T09:23:44Z" finished-at="2019-03-28T09:24:26Z">
       <class name="testingauto.Tests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:testingauto.Tests@1324409e]" name="setUp" is-config="true" duration-ms="12676" started-at="2019-03-27T13:59:03Z" finished-at="2019-03-27T13:59:16Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:testingauto.Tests@1324409e]" name="setUp" is-config="true" duration-ms="13284" started-at="2019-03-28T09:23:44Z" finished-at="2019-03-28T09:23:57Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="multipleLogin()[pri:0, instance:testingauto.Tests@1324409e]" name="multipleLogin" duration-ms="77199" started-at="2019-03-27T13:59:16Z" finished-at="2019-03-27T14:00:33Z">
+        <test-method status="PASS" signature="multipleLogin()[pri:0, instance:testingauto.Tests@1324409e]" name="multipleLogin" duration-ms="27464" started-at="2019-03-28T09:23:57Z" finished-at="2019-03-28T09:24:25Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- multipleLogin -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:testingauto.Tests@1324409e]" name="tearDown" is-config="true" duration-ms="1420" started-at="2019-03-27T14:00:33Z" finished-at="2019-03-27T14:00:34Z">
+        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:testingauto.Tests@1324409e]" name="tearDown" is-config="true" duration-ms="1448" started-at="2019-03-28T09:24:25Z" finished-at="2019-03-28T09:24:26Z">
           <params>
             <param index="0">
               <value>

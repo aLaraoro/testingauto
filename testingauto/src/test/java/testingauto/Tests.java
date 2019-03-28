@@ -3,6 +3,9 @@ package testingauto;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 import java.util.*;
 
 import org.apache.commons.io.FileUtils;
@@ -35,6 +38,7 @@ public class Tests {
 
 	private WebDriver driver;
 	private Data data;
+	private List<Map<String,String>> list;
 	ArrayList<String> tabs;
 	
 	@BeforeMethod
@@ -44,6 +48,10 @@ public class Tests {
 		String exePath = "Chrome Driver\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
+		
+		data = new Data("./data.xlsx");
+		list = data.getData();
+		
 		//driver.manage().window().maximize();
 		//driver.manage().window().maximize();
 		
@@ -74,8 +82,7 @@ public class Tests {
 	@Test
 	public void multipleLogin() throws Exception {
 		PageLogin pageLogin = new PageLogin(driver);
-		data = new Data("./data.xlsx");
-		List<Map<String,String>> list = data.getData();
+		
 		pageLogin.loginXTimes("http://newtours.demoaut.com/");
 		
 		
@@ -86,7 +93,6 @@ public class Tests {
 			
 			driver.switchTo().window(tabs.get(k));
 			Boolean result = Boolean.parseBoolean(list.get(k).get("assert"));
-			System.out.println(result);
 			if(result) {
 				
 				PageReservation pageReservation = new PageReservation(driver);
@@ -149,10 +155,53 @@ public class Tests {
 			}
 			
 		}
-		
+		String tcName = result.getName();
+		Boolean success = result.isSuccess();
 		ArrayList<Object> list = new ArrayList<Object>();
+		LocalDateTime date = LocalDateTime.now();
+		String day = this.getDateOrTime(date,true);
+		String hour = this.getDateOrTime(date,false);
+		list.add(tcName);
+		list.add(success);
+		list.add(day);
+		list.add(hour);
 		data.insertRow(list);
 
 	}
+	
+	
+	public String getDateOrTime(LocalDateTime timeDate, Boolean isDate) {
+		
+		String date = "";
+		String a="";
+		String b="";
+		String c="";
+		
+		String sep = "";
+		
+		if(isDate) {
+			a=String.format("d", timeDate.getDayOfMonth());
+			b= String.format("m", timeDate.getMonthValue());
+			c= String.format("Y", timeDate.getYear());
+			sep = "/";	
+			
+			
+		}else {
+			
+			a=String.format("H", timeDate.getDayOfMonth());
+			b= String.format("M", timeDate.getMinute());;
+			c= String.format("S", timeDate.getSecond());;
+			sep = ":";	
+			
+		}
+		date += a + sep + b + sep + c;
+		
+		
+		
+		return date;
+		
+		
+	}
+	
 
 }
