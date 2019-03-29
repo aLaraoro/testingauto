@@ -81,7 +81,6 @@ public class Data {
                         Cell cell = cellIterator.next();
                         
                         String cellValue = dataFormatter.formatCellValue(cell);
-                        
                         map.put(topRow.getCell(j).toString(), cellValue);
                         j++;
                     }
@@ -104,13 +103,40 @@ public class Data {
 		
 	}
 	
-	public void insertRow(List<String> list) throws FileNotFoundException, IOException {
+	public List<String> getLoginData(List<Map<String,String>> list, Boolean isCorrect){
+		
+		List<String> loginList = new ArrayList<String>();
+		
+		
+		for(int i=0;i<list.size();i++) {
+			
+			Boolean bool = Boolean.parseBoolean(list.get(i).get("assert"));
+			
+			if(isCorrect == bool) {
+				System.out.println("Data//getLoginData//vuelta: "+i);
+				loginList.add(list.get(i).get("userName"));
+				loginList.add(list.get(i).get("password"));
+				break;
+				
+			}
+			
+			
+		}
+		
+		return loginList;		
+		
+		
+	}
+	
+	public void insertRowMap(Map<Integer,String[]> map) throws IOException {
+		
 		Workbook newWorkBook = new XSSFWorkbook();
 		int count = workbook.getNumberOfSheets();
 		DataFormatter dataFormatter = new DataFormatter();
 		FileOutputStream output = new FileOutputStream(data);
 		Sheet sheet = null;
-		System.out.println(count);
+		System.out.println("Data//insertRow//numSheets: "+count);
+		List<String> list =  this.toList(map, 1);
 		for(int i=0;i<count;i++) {
 			
 			Sheet sheet1 = newWorkBook.createSheet();
@@ -124,14 +150,8 @@ public class Data {
 			
 			sheet = newWorkBook.createSheet("Result");
 
-			List<String> names = new ArrayList<String>();
+			List<String> names = this.toList(map, 0);
 			
-			names.add("TC Name");
-			names.add("Day");
-			names.add("Time");
-			names.add("Success");
-			names.add("Message");
-			names.add("Cause");
 			this.createRow(0, names, sheet);
 			this.createRow(1, list, sheet);
 						
@@ -142,7 +162,7 @@ public class Data {
 			
 			sheet = newWorkBook.getSheetAt(1);
 			int n = sheet.getLastRowNum();
-			System.out.println(n);
+			System.out.println("Data//insertRow//Ultima fila: "+n);
 			this.createRow(n+1, list, sheet);
 			
 		}
@@ -153,6 +173,30 @@ public class Data {
 		
 		
 	}
+	
+	public List<String> toList(Map<Integer,String[]> map, Integer isKey){
+		
+		int size = map.size();
+		List<String> list = new ArrayList<String>();
+		
+		
+		for(int i=0;i<size;i++) {
+			String[] array = map.get(i);
+			list.add(array[isKey]);
+			
+			
+		}
+		
+
+		
+		
+		
+		return list;
+		
+		
+	}
+	
+
 	
 	public void createRow(int a, List<String> arrayList, Sheet sheet) {
 		System.out.println(a);
@@ -195,7 +239,16 @@ public class Data {
 			
 			if(widt > width) {
 				
+				if(widt>=255) {
+					
+					width = 255;
+					
+					
+				}else {
+				
 				width = widt+1;
+				
+				}
 				
 			}else if(widt == width) {
 				

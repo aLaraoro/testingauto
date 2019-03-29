@@ -72,10 +72,7 @@ public class PageLogin {
 			String passList = list.get(j).get(pass);
 			driver.switchTo().window(tabs.get(j));
 			
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.findElement(userField).sendKeys(usernameList);
-			driver.findElement(pwdField).sendKeys(passList);
-			driver.findElement(loginButton).click();
+			this.login(usernameList, passList);
 
 		}
 		
@@ -84,22 +81,14 @@ public class PageLogin {
 		
 	}
 
-	public void login(String user, String pass) {
-
+	public void login(String user, String pass) throws InterruptedException {
+		Thread.sleep(5000);
+		driver.findElement(signOn).click();
 		driver.findElement(userField).sendKeys(user);
 		driver.findElement(pwdField).sendKeys(pass);
 		driver.findElement(loginButton).click();
-		
-		/*File myScreenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		try {
-			System.out.println("Creando captura");
-			
-			FileUtils.copyFile(myScreenshot, new File("LOGIN " + System.currentTimeMillis()  + ".png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Login Button: "+driver.findElement(loginButton).isEnabled());	
+		Thread.sleep(4000);
 
 	}
 	

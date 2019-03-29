@@ -3,6 +3,7 @@ package testingauto;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import assertpage.AssertPages;
 import data.Data;
 import pages.PageLogin;
 import pages.PageLogon;
@@ -84,43 +86,26 @@ public class Tests {
 	@Test
 	public void multipleLogin() throws Exception {
 		PageLogin pageLogin = new PageLogin(driver);
-		
+		AssertPages assertPages = new AssertPages(driver);
 		pageLogin.loginXTimes("http://newtours.demoaut.com/", list);
-		
-		
-		
 		tabs = new ArrayList<String> (driver.getWindowHandles());
 		
-		for(int k=0;k<tabs.size();k++) {
-			
-			driver.switchTo().window(tabs.get(k));
-			Boolean result = Boolean.parseBoolean(list.get(k).get("assert"));
-			if(result) {
-				
-				PageReservation pageReservation = new PageReservation(driver);
-				pageReservation.assertPage();
-				
-			}else {
-				
-				PageLogon pageLogon = new PageLogon(driver);
-				pageLogon.assertLogonPage();
-			}
-			
-			driver.switchTo().window(tabs.get(k)).close();
-			
-		}
+		assertPages.assertMultipleTabs(tabs, list);
+		
 		
 		
 	}
 
 	@Test
-	public void correctLogin() {
+	public void correctLogin() throws InterruptedException {
+
 		
 		PageLogin pageLogin = new PageLogin(driver);
-		PageReservation pageReservation = new PageReservation(driver);
+		AssertPages assertPages = new AssertPages(driver);
 		pageLogin.login("mercury", "mercury");
-		pageReservation.assertPage();
+		assertPages.correctOrIncorrect(true);
 		driver.close();
+		
 
 	}/*
 	@Test
@@ -159,30 +144,41 @@ public class Tests {
 			
 		}
 		
-		String message = "null";
-		String cause = "null";
+		this.tcResult(result);
+		driver.quit();
+
+	}
+	
+	
+	public void tcResult(ITestResult result) throws FileNotFoundException, IOException {
+		
+		String[] message = {"Message","null"};
+		
+		String[] location = {"Location",""};
 		if (result.getThrowable() != null) {
 			
-			message = result.getThrowable().getMessage();
-			cause = result.getThrowable().getCause().toString();
+			String a = result.getThrowable().getMessage();
 			
+			message[1] = a;
 		}
 		
-		String tcName = result.getName();
+		Map<Integer,String[]> map = new HashMap<Integer,String[]>();
+		
+		String[] tcName = {"TC Name",result.getName()};
 		Boolean resultSuc = result.isSuccess();
-		String success = resultSuc.toString();
+		String[] success = {"Success",resultSuc.toString()};
 		ArrayList<String> list = new ArrayList<String>();
 		LocalDateTime date = LocalDateTime.now();
-		String day = this.getDateOrTime(date,true);
-		String hour = this.getDateOrTime(date,false);
-		list.add(tcName);
-		list.add(day);
-		list.add(hour);
-		list.add(success);
-		list.add(message);
-		list.add(cause);
-		data.insertRow(list);
-
+		String[] day = {"Day",this.getDateOrTime(date,true)};
+		String[] hour = {"Hour",this.getDateOrTime(date,false)};
+		map.put(0, tcName);
+		map.put(1, day);
+		map.put(2, hour);
+		map.put(3, success);
+		map.put(4, message);
+		data.insertRowMap(map);
+		
+		
 	}
 	
 	
