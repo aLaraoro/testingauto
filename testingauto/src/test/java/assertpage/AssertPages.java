@@ -4,20 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
-import pages.PageLogon;
 import pages.PageReservation;
 
 public class AssertPages {
 	private WebDriver driver;
-	private PageReservation pageReservation;
-	private PageLogon pageLogon;
+	private By reservationTitle;
+	private By logonOn;
+	private By signOff;
+	
 	
 	public AssertPages(WebDriver driver) {
 		
 		this.driver = driver;
-		
+		reservationTitle = By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/font");
+		logonOn = By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/p/font/b");
+		signOff = By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td[1]/a");
 		
 	}
 	
@@ -28,16 +33,8 @@ public class AssertPages {
 			
 			driver.switchTo().window(tabs.get(i));
 			Boolean result = Boolean.parseBoolean(list.get(i).get("assert"));
-			if(result) {
-				
-				PageReservation pageReservation = new PageReservation(driver);
-				pageReservation.assertPage();
-				
-			}else {
-				
-				PageLogon pageLogon = new PageLogon(driver);
-				pageLogon.assertLogonPage();
-			}
+			
+			this.correctOrIncorrect(result);
 			
 			driver.switchTo().window(tabs.get(i)).close();
 			
@@ -52,13 +49,11 @@ public class AssertPages {
 		System.out.println(bool);
 		if(bool) {
 			
-			pageReservation = new PageReservation(driver);
-			pageReservation.assertPage();
+			Assert.assertTrue(driver.findElement(reservationTitle).getText().contains("Flight Finder"));
 			
 		}else {
 			
-			pageLogon = new PageLogon(driver);
-			pageLogon.assertLogonPage();
+			Assert.assertTrue(driver.findElement(logonOn).getText().contains("Welcome back to"));
 			
 		}
 		

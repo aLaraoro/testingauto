@@ -6,8 +6,12 @@
       <class name="testingauto.Tests">
         <methods>
           <include name="correctLogin"/>
-          <include name="multipleLogin"/>
+          <include name="init"/>
           <include name="setUp"/>
+          <include name="loginEmptyBoth"/>
+          <include name="correctLoginNTimes"/>
+          <include name="loginEmptyPass"/>
+          <include name="loginEmptyUser"/>
           <include name="tearDown"/>
         </methods>
       </class> <!-- testingauto.Tests -->

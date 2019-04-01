@@ -12,6 +12,7 @@ import java.time.temporal.Temporal;
 import java.util.*;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -28,14 +29,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import assertpage.AssertPages;
 import data.Data;
 import pages.PageLogin;
-import pages.PageLogon;
-import pages.PageReservation;
 
 
 public class Tests {
@@ -43,30 +43,34 @@ public class Tests {
 	private WebDriver driver;
 	private Data data;
 	private List<Map<String,String>> list;
+	private List<String> loginList;
+	private List<Map<String,String>> autoLogin;
+	private Integer row;
 	ArrayList<String> tabs;
 	
+	@BeforeClass
+	public void init() throws IOException, Exception, InvalidFormatException {
+		
+		//Data
+		data = new Data("./data.xlsx");
+		list = data.getData();
+		loginList = data.getLoginData(list, true);
+		autoLogin = data.autoList(loginList, 5);
+		
+	}
+	
 	@BeforeMethod
-	public void setUp() throws IOException, Exception, InvalidFormatException {
+	public void setUp() {
 
-		DesiredCapabilities caps = new DesiredCapabilities();
+		DesiredCapabilities caps = new DesiredCapabilities();				
+		
+		//Inicia driver
 		String exePath = "Chrome Driver\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
-		
-		data = new Data("./data.xlsx");
-		list = data.getData();
-		
-		//driver.manage().window().maximize();
-		//driver.manage().window().maximize();
-		
-
-		
-		//driver.manage().window().setSize(new Dimension(200,400));
        
 		driver.navigate().to("http://newtours.demoaut.com/");
 
-		/*Helpers helper = new Helpers();
-		helper.sleepSeconds(5);*/
 
 	}
 		
@@ -83,8 +87,13 @@ public class Tests {
 	}*/
 	
 	
+	/*
+	
 	@Test
 	public void multipleLogin() throws Exception {
+		System.out.println("Multi Login");
+		System.out.println("From Data Excell");
+		
 		PageLogin pageLogin = new PageLogin(driver);
 		AssertPages assertPages = new AssertPages(driver);
 		pageLogin.loginXTimes("http://newtours.demoaut.com/", list);
@@ -92,18 +101,61 @@ public class Tests {
 		
 		assertPages.assertMultipleTabs(tabs, list);
 		
+	}*/
+	
+	@Test
+	public void correctLoginNTimes() throws Exception{
+		System.out.println("Correct Login");
+		System.out.println("5 times");
+		PageLogin pageLogin = new PageLogin(driver);
+		pageLogin.loginXTimes("http://newtours.demoaut.com/", autoLogin);
+		driver.close();
 		
+		
+	}
+	
+	@Test
+	public void loginEmptyPass() throws InterruptedException {
+		System.out.println("Login");
+		System.out.println("Empty password");
+		PageLogin pageLogin = new PageLogin(driver);
+		row=3;
+		pageLogin.filter(row, list);
+		driver.close();
+		
+	}
+	
+	
+	
+	@Test
+	public void loginEmptyUser() throws InterruptedException {
+		System.out.println("Login");
+		System.out.println("Empty user");
+		PageLogin pageLogin = new PageLogin(driver);
+		row = 4;
+		pageLogin.filter(row, list);
+		driver.close();
+		
+	}
+	
+	@Test
+	public void loginEmptyBoth() throws InterruptedException {
+		System.out.println("Login");
+		System.out.println("Both empty");
+		PageLogin pageLogin = new PageLogin(driver);
+		row = 5;
+		pageLogin.filter(row, list);
+		driver.close();
 		
 	}
 
 	@Test
 	public void correctLogin() throws InterruptedException {
 
-		
+		System.out.println("Correct Login");
 		PageLogin pageLogin = new PageLogin(driver);
-		AssertPages assertPages = new AssertPages(driver);
-		pageLogin.login("mercury", "mercury");
-		assertPages.correctOrIncorrect(true);
+		row = 1;
+		pageLogin.filter(row, list);
 		driver.close();
 		
 
@@ -130,12 +182,11 @@ public class Tests {
 
 	@AfterMethod
 	public void tearDown(ITestResult result) throws FileNotFoundException, IOException {
-		
 		if(!result.isSuccess()) {
 			File myScreenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 			try {
 				System.out.println("Creando captura");
-				
+				System.out.println(result.getName());
 				FileUtils.copyFile(myScreenshot, new File("Error " + System.currentTimeMillis()  + ".png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -143,7 +194,7 @@ public class Tests {
 			}
 			
 		}
-		
+		System.out.println("Tests/tearDown/TC Num:"+row);
 		this.tcResult(result);
 		driver.quit();
 
@@ -154,7 +205,6 @@ public class Tests {
 		
 		String[] message = {"Message","null"};
 		
-		String[] location = {"Location",""};
 		if (result.getThrowable() != null) {
 			
 			String a = result.getThrowable().getMessage();
@@ -165,17 +215,32 @@ public class Tests {
 		Map<Integer,String[]> map = new HashMap<Integer,String[]>();
 		
 		String[] tcName = {"TC Name",result.getName()};
+		
+		String[] expectedResult = {"Expected Result",list.get(row).get("expectedResult")};
+		
+		String[] title = {"Page title",""};
+		
 		Boolean resultSuc = result.isSuccess();
-		String[] success = {"Success",resultSuc.toString()};
+		if(!resultSuc) {
+			
+			title[1] = driver.getTitle();
+			
+		}
+		
+		String[] success = {"Success",StringUtils.capitalize(resultSuc.toString())};
 		ArrayList<String> list = new ArrayList<String>();
 		LocalDateTime date = LocalDateTime.now();
 		String[] day = {"Day",this.getDateOrTime(date,true)};
 		String[] hour = {"Hour",this.getDateOrTime(date,false)};
+
+		
 		map.put(0, tcName);
 		map.put(1, day);
 		map.put(2, hour);
-		map.put(3, success);
-		map.put(4, message);
+		map.put(3, expectedResult);
+		map.put(4, success);
+		map.put(5, message);
+		map.put(6, title);
 		data.insertRowMap(map);
 		
 		

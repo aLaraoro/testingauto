@@ -43,12 +43,13 @@ public class Data {
 	public List<Map<String,String>> getData() throws Exception, InvalidFormatException, IOException{
 		
 		List<Map<String,String>> data = new ArrayList<Map<String,String>>();
-		       
+		System.out.println("Data/getData");       
 
         // Retrieving the number of sheets in the Workbook
 		numSheets = workbook.getNumberOfSheets();
+		System.out.println("Data/getData/Num Sheets: " + numSheets);
+		System.out.println("Get All sheets");
 		for(int i = 0;i<numSheets;i++) {
-			System.out.println(i);
 			sheets.add(workbook.getSheetAt(i));
 			
 			
@@ -60,45 +61,69 @@ public class Data {
         DataFormatter dataFormatter = new DataFormatter();
 
         // 1. You can obtain a rowIterator and columnIterator and iterate over them
-        Iterator<Row> rowIterator = sheet.rowIterator();
         Row topRow = sheet.getRow(0);
-        int firstRow = sheet.getFirstRowNum();
-        int i = 0;
-        while (rowIterator.hasNext()) {
-        
+        int lastRow = sheet.getLastRowNum();
+        System.out.println("Row and cell iterator");
+        System.out.println(lastRow);
+        for(int i=1; i<=lastRow;i++) {
         		
-                Row row = rowIterator.next();
-        		if(i>firstRow) {
-                
-                // Now let's iterate over the columns of the current row
-                Iterator<Cell> cellIterator = row.cellIterator();
-                int j =0;
-                Boolean empty = this.RowEmptyValue(row, dataFormatter);
-                if(!empty) {
-                	Map<String,String> map = new HashMap<String,String>();
-                	
-                	while (cellIterator.hasNext()) {
-                        Cell cell = cellIterator.next();
-                        
-                        String cellValue = dataFormatter.formatCellValue(cell);
-                        map.put(topRow.getCell(j).toString(), cellValue);
-                        j++;
-                    }
-                    data.add(map);
-                	
-                	
-                }
-                
+			Row row = sheet.getRow(i);
+			int rowNum = Integer.parseInt(row.getCell(0).getStringCellValue());
+			String name = "";
+			for(int a=0;a<row.getLastCellNum();a++) {
+				
+				name += row.getCell(a) + " ";
+				
+			}
+    			
+    		System.out.println(name);
+            
+            // Now let's iterate over the columns of the current row
+            Boolean empty = this.RowEmptyValue(row, dataFormatter);
+	            if(!empty) {
+	            	Map<String,String> map = new HashMap<String,String>();
+	            	
+	            	for (int j =0;j<row.getLastCellNum();j++) {
+	                    Cell cell = row.getCell(j);
+	                    
+	                    String cellValue = dataFormatter.formatCellValue(cell);
+	                    map.put(topRow.getCell(j).toString(), cellValue);
+	                }
+	                data.add(map);
+	            	
+	            	
+	            }
         		
-        		}
         	
         	
-
-            i++;
+        	
+        	
+        	
+        	
         }
+        
+        
 		return data;
 		
 		
+		
+		
+	}
+	
+	
+	public List<Map<String,String>> autoList(List<String> map, int times){
+		
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		for(int i=0;i<times;i++) {
+
+			Map<String,String> nwMap = new HashMap<String,String>();
+			nwMap.put("userName",map.get(0));
+			nwMap.put("password",map.get(1));
+			list.add(nwMap);
+			
+		}
+		
+		return list;
 		
 		
 	}
@@ -113,9 +138,9 @@ public class Data {
 			Boolean bool = Boolean.parseBoolean(list.get(i).get("assert"));
 			
 			if(isCorrect == bool) {
-				System.out.println("Data//getLoginData//vuelta: "+i);
 				loginList.add(list.get(i).get("userName"));
 				loginList.add(list.get(i).get("password"));
+				loginList.add(list.get(i).get("expectedResult"));
 				break;
 				
 			}
@@ -135,7 +160,6 @@ public class Data {
 		DataFormatter dataFormatter = new DataFormatter();
 		FileOutputStream output = new FileOutputStream(data);
 		Sheet sheet = null;
-		System.out.println("Data//insertRow//numSheets: "+count);
 		List<String> list =  this.toList(map, 1);
 		for(int i=0;i<count;i++) {
 			
@@ -155,17 +179,17 @@ public class Data {
 			this.createRow(0, names, sheet);
 			this.createRow(1, list, sheet);
 						
-			System.out.println("Numero hojas: "+newWorkBook.getNumberOfSheets());
 
 			
 		}else {
 			
 			sheet = newWorkBook.getSheetAt(1);
 			int n = sheet.getLastRowNum();
-			System.out.println("Data//insertRow//Ultima fila: "+n);
+			System.out.println("Data/insertRowMap/Número de filas: " + n);
 			this.createRow(n+1, list, sheet);
 			
 		}
+		
 		
 		newWorkBook.write(output);
 		output.close();
@@ -195,11 +219,9 @@ public class Data {
 		
 		
 	}
-	
 
 	
 	public void createRow(int a, List<String> arrayList, Sheet sheet) {
-		System.out.println(a);
 		
 		//Crea fila en sheet
 		sheet.createRow(a);
@@ -219,18 +241,22 @@ public class Data {
 			int width = (int) sheet.getColumnWidth(i)/255;
 			int widt=0;
 			String cellValue =  arrayList.get(i);
+			int mod = i&2;
 			//Get value and insert into cell
-			if(a==0 || i==0 || i==1) {
+			if(a>0 && (i>0 && i<3)) {
 				
-				//Titles, TC name cells and boolean
 				
-				cell.setCellType(CellType.STRING);
+				//DateTime values
+				cell.setCellType(CellType.NUMERIC);
+				
+	
 
 				
 			}else{
 				
-				//DateTime values
-				cell.setCellType(CellType.NUMERIC);
+			//Titles, TC name cells and boolean
+				
+				cell.setCellType(CellType.STRING);
 
 				
 			}

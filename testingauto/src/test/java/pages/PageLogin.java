@@ -22,6 +22,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import assertpage.AssertPages;
 import data.Data;
 
 
@@ -76,19 +77,38 @@ public class PageLogin {
 
 		}
 		
+		AssertPages assertPages = new AssertPages(driver);
+		assertPages.assertMultipleTabs(tabs, list);
+		
 	
+		
+		
+	}
+	
+	
+	public void filter(Integer a, List<Map<String,String>> list) throws InterruptedException {
+		
+		Map<String,String> map = list.get(a-1);
+		Boolean bool = Boolean.parseBoolean(map.get("assert"));
+		this.login(map.get("userName"), map.get("password"));
+		AssertPages assertPages = new AssertPages(driver);
+		assertPages.correctOrIncorrect(bool);
 		
 		
 	}
 
 	public void login(String user, String pass) throws InterruptedException {
+		
+		System.out.println("PageLogin/Login");
+		System.out.println(user);
+		System.out.println(pass);
 		Thread.sleep(5000);
 		driver.findElement(signOn).click();
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		driver.findElement(userField).sendKeys(user);
 		driver.findElement(pwdField).sendKeys(pass);
 		driver.findElement(loginButton).click();
-		System.out.println("Login Button: "+driver.findElement(loginButton).isEnabled());	
-		Thread.sleep(4000);
+		Thread.sleep(5000);
 
 	}
 	
