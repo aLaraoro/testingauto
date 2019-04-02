@@ -5,13 +5,10 @@
     <classes>
       <class name="testingauto.Tests">
         <methods>
-          <include name="correctLogin"/>
-          <include name="init"/>
           <include name="setUp"/>
-          <include name="loginEmptyBoth"/>
-          <include name="correctLoginNTimes"/>
-          <include name="loginEmptyPass"/>
-          <include name="loginEmptyUser"/>
+          <include name="registerNoPwd"/>
+          <include name="registerNoUser"/>
+          <include name="registerNoConfirmationPwd"/>
           <include name="tearDown"/>
         </methods>
       </class> <!-- testingauto.Tests -->

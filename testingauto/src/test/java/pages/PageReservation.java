@@ -15,6 +15,7 @@ public class PageReservation {
 	private By passengersDrop;
 	private By fromDrop;
 	private By arrivals;
+	private By flights;
 
 	public PageReservation(WebDriver driver) {
 
@@ -22,7 +23,19 @@ public class PageReservation {
 		passengersDrop = By.name("passCount");
 		fromDrop = By.name("fromPort");
 		arrivals = By.name("toPort");
-
+		flights = By.partialLinkText("Flights");
+	}
+	
+	public void reservationLogin(Boolean bool) {
+		String title = driver.getTitle();
+		driver.findElement(flights).click();
+		if(!bool) {
+			
+			Assert.assertTrue(driver.getTitle().equalsIgnoreCase(title));
+			
+		}
+		
+		
 	}
 
 

@@ -1,6 +1,7 @@
 data\Data.class
 testingauto\Tests.class
 pages\PageLogin.class
+pages\Register$1.class
 pages\PageReservation.class
 helpers\Helpers.class
 pages\Register.class

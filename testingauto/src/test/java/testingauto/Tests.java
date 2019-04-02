@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -36,6 +37,7 @@ import org.testng.annotations.Test;
 import assertpage.AssertPages;
 import data.Data;
 import pages.PageLogin;
+import pages.Register;
 
 
 public class Tests {
@@ -44,23 +46,20 @@ public class Tests {
 	private Data data;
 	private List<Map<String,String>> list;
 	private List<String> loginList;
-	private List<Map<String,String>> autoLogin;
+	//private List<Map<String,String>> autoLogin;
 	private Integer row;
+	private String expectedResult;
+	
 	ArrayList<String> tabs;
 	
-	@BeforeClass
-	public void init() throws IOException, Exception, InvalidFormatException {
+	@BeforeMethod
+	public void setUp() throws IOException, Exception, InvalidFormatException {
+		
 		
 		//Data
 		data = new Data("./data.xlsx");
 		list = data.getData();
-		loginList = data.getLoginData(list, true);
-		autoLogin = data.autoList(loginList, 5);
-		
-	}
-	
-	@BeforeMethod
-	public void setUp() {
+		//autoLogin = data.autoList(loginList, 5);
 
 		DesiredCapabilities caps = new DesiredCapabilities();				
 		
@@ -101,7 +100,7 @@ public class Tests {
 		
 		assertPages.assertMultipleTabs(tabs, list);
 		
-	}*/
+	}
 	
 	@Test
 	public void correctLoginNTimes() throws Exception{
@@ -112,6 +111,78 @@ public class Tests {
 		driver.close();
 		
 		
+	}*/
+	
+	@Test
+	public void register() throws InterruptedException {
+		System.out.println("Register");
+		Register register = new Register(driver);
+		Map<String, String> map = register.optional("a", "a", "654321777", "a@gmail.com", "Av. de la Torre Blanca, 57", "Sant Cugat del Vallés", "New York", "08172");
+		    
+	    
+	    Map<String,String> required = register.required("user", "user", "user");
+	    
+		register.register(map,required);
+		AssertPages assertPages = new AssertPages(driver);
+		assertPages.assertRegister(true,"");
+		this.expectedResult = "Register Correctly";
+		driver.close();
+		
+	}
+	
+	@Test
+	public void registerNoUser() throws InterruptedException {
+		
+		System.out.println("Register");
+		Register register = new Register(driver);
+		Map<String, String> map = register.optional("a", "a", "654321777", "a@gmail.com", "Av. de la Torre Blanca, 57", "Sant Cugat del Vallés", "New York", "08172");
+		    
+	    
+	    Map<String,String> required = register.required("", "user", "user");
+	    
+		register.register(map,required);
+		AssertPages assertPages = new AssertPages(driver);
+		assertPages.assertRegister(false,"No username");
+		this.expectedResult = "Don't allow register";
+		driver.close();
+		
+		
+	}
+	
+	@Test
+	public void registerNoPwd() throws InterruptedException {
+		
+		System.out.println("Register");
+		Register register = new Register(driver);
+		Map<String, String> map = register.optional("a", "a", "654321777", "a@gmail.com", "Av. de la Torre Blanca, 57", "Sant Cugat del Vallés", "New York", "08172");
+		    
+	    
+	    Map<String,String> required = register.required("user", "", "user");
+	    
+		register.register(map,required);
+		AssertPages assertPages = new AssertPages(driver);
+		assertPages.assertRegister(false,"No password");
+		this.expectedResult = "Don't allow register";
+		driver.close();
+		
+		
+	}
+	@Test
+	public void registerNoConfirmationPwd() throws InterruptedException {
+		
+		System.out.println("Register");
+		Register register = new Register(driver);
+		Map<String, String> map = register.optional("a", "a", "654321777", "a@gmail.com", "Av. de la Torre Blanca, 57", "Sant Cugat del Vallés", "New York", "08172");
+		    
+	    Map<String,String> required = register.required("user", "user", "");
+	    
+		register.register(map,required);
+		AssertPages assertPages = new AssertPages(driver);
+		assertPages.assertRegister(false,"No confirmation password");
+		this.expectedResult = "Don't allow register";
+		driver.close();
+		
+		
 	}
 	
 	@Test
@@ -119,8 +190,8 @@ public class Tests {
 		System.out.println("Login");
 		System.out.println("Empty password");
 		PageLogin pageLogin = new PageLogin(driver);
-		row=3;
-		pageLogin.filter(row, list);
+		this.expectedResult = list.get(2).get("expectedResult");
+		pageLogin.filter(2, list);
 		driver.close();
 		
 	}
@@ -132,8 +203,8 @@ public class Tests {
 		System.out.println("Login");
 		System.out.println("Empty user");
 		PageLogin pageLogin = new PageLogin(driver);
-		row = 4;
-		pageLogin.filter(row, list);
+		this.expectedResult = list.get(3).get("expectedResult");
+		pageLogin.filter(3, list);
 		driver.close();
 		
 	}
@@ -143,8 +214,8 @@ public class Tests {
 		System.out.println("Login");
 		System.out.println("Both empty");
 		PageLogin pageLogin = new PageLogin(driver);
-		row = 5;
-		pageLogin.filter(row, list);
+		this.expectedResult = list.get(4).get("expectedResult");
+		pageLogin.filter(4, list);
 		driver.close();
 		
 	}
@@ -154,8 +225,8 @@ public class Tests {
 
 		System.out.println("Correct Login");
 		PageLogin pageLogin = new PageLogin(driver);
-		row = 1;
-		pageLogin.filter(row, list);
+		this.expectedResult = list.get(0).get("expectedResult");
+		pageLogin.filter(0, list);
 		driver.close();
 		
 
@@ -207,16 +278,15 @@ public class Tests {
 		
 		if (result.getThrowable() != null) {
 			
-			String a = result.getThrowable().getMessage();
+			message[1] = result.getThrowable().getMessage();
 			
-			message[1] = a;
 		}
 		
 		Map<Integer,String[]> map = new HashMap<Integer,String[]>();
 		
 		String[] tcName = {"TC Name",result.getName()};
 		
-		String[] expectedResult = {"Expected Result",list.get(row).get("expectedResult")};
+		String[] expectedResu = {"Expected Result",expectedResult};
 		
 		String[] title = {"Page title",""};
 		
@@ -237,7 +307,7 @@ public class Tests {
 		map.put(0, tcName);
 		map.put(1, day);
 		map.put(2, hour);
-		map.put(3, expectedResult);
+		map.put(3, expectedResu);
 		map.put(4, success);
 		map.put(5, message);
 		map.put(6, title);

@@ -72,9 +72,17 @@ public class PageLogin {
 			String usernameList = list.get(j).get(username);
 			String passList = list.get(j).get(pass);
 			driver.switchTo().window(tabs.get(j));
-			
+			this.loginPage();
 			this.login(usernameList, passList);
 
+		}
+		
+		for(int j=0;j<tabs.size();j++) {
+			
+			driver.switchTo().window(tabs.get(j));
+			driver.findElement(loginButton).click();
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			
 		}
 		
 		AssertPages assertPages = new AssertPages(driver);
@@ -88,12 +96,22 @@ public class PageLogin {
 	
 	public void filter(Integer a, List<Map<String,String>> list) throws InterruptedException {
 		
-		Map<String,String> map = list.get(a-1);
+		Map<String,String> map = list.get(a);
 		Boolean bool = Boolean.parseBoolean(map.get("assert"));
+		loginPage();
 		this.login(map.get("userName"), map.get("password"));
+		driver.findElement(loginButton).click();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		AssertPages assertPages = new AssertPages(driver);
-		assertPages.correctOrIncorrect(bool);
+		assertPages.correctOrIncorrect(bool,map.get("expectedResult"));
 		
+		
+	}
+	
+	public void loginPage() {
+		
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(signOn).click();
 		
 	}
 
@@ -102,13 +120,11 @@ public class PageLogin {
 		System.out.println("PageLogin/Login");
 		System.out.println(user);
 		System.out.println(pass);
-		Thread.sleep(5000);
-		driver.findElement(signOn).click();
+
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		driver.findElement(userField).sendKeys(user);
 		driver.findElement(pwdField).sendKeys(pass);
-		driver.findElement(loginButton).click();
-		Thread.sleep(5000);
+
 
 	}
 	

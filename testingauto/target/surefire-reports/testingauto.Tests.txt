@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: testingauto.Tests
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 773.965 sec <<< FAILURE!
+registerNoConfirmationPwd(testingauto.Tests)  Time elapsed: 195.697 sec  <<< FAILURE!
+java.lang.AssertionError: User with: No confirmation password is properly registered expected [false] but found [true]
+	at org.testng.Assert.fail(Assert.java:96)
+	at org.testng.Assert.failNotEquals(Assert.java:776)
+	at org.testng.Assert.assertFalse(Assert.java:65)
+	at assertpage.AssertPages.assertRegister(AssertPages.java:55)
+	at testingauto.Tests.registerNoConfirmationPwd(Tests.java:181)
+
+registerNoPwd(testingauto.Tests)  Time elapsed: 25.259 sec  <<< FAILURE!
+java.lang.AssertionError: User with: No password is properly registered expected [false] but found [true]
+	at org.testng.Assert.fail(Assert.java:96)
+	at org.testng.Assert.failNotEquals(Assert.java:776)
+	at org.testng.Assert.assertFalse(Assert.java:65)
+	at assertpage.AssertPages.assertRegister(AssertPages.java:55)
+	at testingauto.Tests.registerNoPwd(Tests.java:164)
+
+registerNoUser(testingauto.Tests)  Time elapsed: 129.304 sec  <<< FAILURE!
+java.lang.AssertionError: User with: No username is properly registered expected [false] but found [true]
+	at org.testng.Assert.fail(Assert.java:96)
+	at org.testng.Assert.failNotEquals(Assert.java:776)
+	at org.testng.Assert.assertFalse(Assert.java:65)
+	at assertpage.AssertPages.assertRegister(AssertPages.java:55)
+	at testingauto.Tests.registerNoUser(Tests.java:145)
+
