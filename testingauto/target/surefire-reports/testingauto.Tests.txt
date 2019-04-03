@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: testingauto.Tests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 86.328 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 67.647 sec

@@ -28,6 +28,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -128,12 +129,28 @@ public class Tests {
 		Map<String,String[]> details = pageReservation.getDetails();
 		
 		pageReservation.bookFlight(details);
+		
+		List<String> confirmList = new ArrayList<String>();
+		String fromPort = details.get("fromPort")[0];
+		String fromDate = details.get("fromMonth")[0] + "/" + details.get("fromDay")[0] + "/2019";
+		String toPort = details.get("toPort")[0];
+		String toDate = details.get("toMonth")[0] + "/" + details.get("toDay")[0] + "/2019";
+		
+		String from = fromPort + " to " + toPort;
+		String to = toPort + " to " + fromPort;
+		confirmList.add(0,from);
+		confirmList.add(1,to);
+		confirmList.add(2,fromDate);
+		confirmList.add(3,toDate);
+		AssertPages assertPages = new AssertPages(driver);
+		assertPages.assertSelectFlight(confirmList);
+		
 		driver.close();
 		
 	}
 	
 	
-	public void changeFromPort() throws InterruptedException {
+	/*public void changeFromPort() throws InterruptedException {
 		
 		
 		System.out.println("Login and book");

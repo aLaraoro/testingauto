@@ -87,7 +87,7 @@ public class PageReservation {
 	}
 	
 	public void bookFlight(Map<String,String[]> flyDetails) {
-		
+
 		for(Map.Entry<String, String[]> entry : flyDetails.entrySet()) {
 			String key = entry.getKey();
 			String type = entry.getValue()[1];
@@ -120,6 +120,9 @@ public class PageReservation {
 
 			
 		}
+		
+		driver.findElement(findFlights).click();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		
 		
 		
