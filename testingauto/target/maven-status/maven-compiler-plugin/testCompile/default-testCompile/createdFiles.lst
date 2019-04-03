@@ -6,3 +6,4 @@ pages\PageReservation.class
 helpers\Helpers.class
 pages\Register.class
 assertpage\AssertPages.class
+pages\PageReservation$1.class

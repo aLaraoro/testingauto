@@ -37,6 +37,7 @@ import org.testng.annotations.Test;
 import assertpage.AssertPages;
 import data.Data;
 import pages.PageLogin;
+import pages.PageReservation;
 import pages.Register;
 
 
@@ -46,9 +47,11 @@ public class Tests {
 	private Data data;
 	private List<Map<String,String>> list;
 	private List<String> loginList;
+	private Boolean displayTc = true;
 	//private List<Map<String,String>> autoLogin;
 	private Integer row;
 	private String expectedResult;
+	private String description;
 	
 	ArrayList<String> tabs;
 	
@@ -114,6 +117,54 @@ public class Tests {
 	}*/
 	
 	@Test
+	public void reserveDefaultFlight() throws InterruptedException {
+		
+		System.out.println("Login and book");
+		displayTc = false;
+		PageLogin pageLogin = new PageLogin(driver);
+		pageLogin.filter(0, list, false, true);
+		
+		PageReservation pageReservation = new PageReservation(driver);
+		Map<String,String[]> details = pageReservation.getDetails();
+		
+		pageReservation.bookFlight(details);
+		driver.close();
+		
+	}
+	
+	
+	public void changeFromPort() throws InterruptedException {
+		
+		
+		System.out.println("Login and book");
+		displayTc = false;
+		PageLogin pageLogin = new PageLogin(driver);
+		pageLogin.filter(0, list, false, true);
+		
+		PageReservation pageReservation = new PageReservation(driver);
+		
+		Map<String,String> changes = new HashMap<String,String>();
+		changes.put("fromPort", "Frankfurt");
+		Map<String,String[]> details = pageReservation.changeOptions(pageReservation.getDetails(), changes);
+		pageReservation.bookFlight(details);
+		
+		driver.close();
+	}
+
+	/*
+	@Test
+	public void reservateWithoutLogin() {
+		System.out.println("Ir página reservar vuelo sin login");
+		this.expectedResult = "Continue on index.php";
+		this.description = "Gp to Flight finder without login";
+		PageReservation pageReservation = new PageReservation(driver);
+		pageReservation.reservationLogin(false,expectedResult);
+		driver.close();
+		
+		
+	}
+	
+	@Test
 	public void register() throws InterruptedException {
 		System.out.println("Register");
 		Register register = new Register(driver);
@@ -126,6 +177,7 @@ public class Tests {
 		AssertPages assertPages = new AssertPages(driver);
 		assertPages.assertRegister(true,"");
 		this.expectedResult = "Register Correctly";
+		this.description = "Register with all required fields filled";
 		driver.close();
 		
 	}
@@ -134,6 +186,7 @@ public class Tests {
 	public void registerNoUser() throws InterruptedException {
 		
 		System.out.println("Register");
+		System.out.println("No username");
 		Register register = new Register(driver);
 		Map<String, String> map = register.optional("a", "a", "654321777", "a@gmail.com", "Av. de la Torre Blanca, 57", "Sant Cugat del Vallés", "New York", "08172");
 		    
@@ -144,6 +197,7 @@ public class Tests {
 		AssertPages assertPages = new AssertPages(driver);
 		assertPages.assertRegister(false,"No username");
 		this.expectedResult = "Don't allow register";
+		this.description = "Register without filling username field";
 		driver.close();
 		
 		
@@ -153,6 +207,7 @@ public class Tests {
 	public void registerNoPwd() throws InterruptedException {
 		
 		System.out.println("Register");
+		System.out.println("No password");
 		Register register = new Register(driver);
 		Map<String, String> map = register.optional("a", "a", "654321777", "a@gmail.com", "Av. de la Torre Blanca, 57", "Sant Cugat del Vallés", "New York", "08172");
 		    
@@ -163,6 +218,7 @@ public class Tests {
 		AssertPages assertPages = new AssertPages(driver);
 		assertPages.assertRegister(false,"No password");
 		this.expectedResult = "Don't allow register";
+		this.description = "Register without filling password field";
 		driver.close();
 		
 		
@@ -171,6 +227,7 @@ public class Tests {
 	public void registerNoConfirmationPwd() throws InterruptedException {
 		
 		System.out.println("Register");
+		System.out.println("No confirmation password");
 		Register register = new Register(driver);
 		Map<String, String> map = register.optional("a", "a", "654321777", "a@gmail.com", "Av. de la Torre Blanca, 57", "Sant Cugat del Vallés", "New York", "08172");
 		    
@@ -180,6 +237,7 @@ public class Tests {
 		AssertPages assertPages = new AssertPages(driver);
 		assertPages.assertRegister(false,"No confirmation password");
 		this.expectedResult = "Don't allow register";
+		this.description = "Register without filling confirmation password field";
 		driver.close();
 		
 		
@@ -191,7 +249,8 @@ public class Tests {
 		System.out.println("Empty password");
 		PageLogin pageLogin = new PageLogin(driver);
 		this.expectedResult = list.get(2).get("expectedResult");
-		pageLogin.filter(2, list);
+		this.description = "Login with empty password field";
+		pageLogin.filter(2, list,true, false);
 		driver.close();
 		
 	}
@@ -204,7 +263,8 @@ public class Tests {
 		System.out.println("Empty user");
 		PageLogin pageLogin = new PageLogin(driver);
 		this.expectedResult = list.get(3).get("expectedResult");
-		pageLogin.filter(3, list);
+		this.description = "Login with empty user field";
+		pageLogin.filter(3, list,true,false);
 		driver.close();
 		
 	}
@@ -215,7 +275,8 @@ public class Tests {
 		System.out.println("Both empty");
 		PageLogin pageLogin = new PageLogin(driver);
 		this.expectedResult = list.get(4).get("expectedResult");
-		pageLogin.filter(4, list);
+		this.description = "Login with empty fields";
+		pageLogin.filter(4, list,true,false);
 		driver.close();
 		
 	}
@@ -226,7 +287,8 @@ public class Tests {
 		System.out.println("Correct Login");
 		PageLogin pageLogin = new PageLogin(driver);
 		this.expectedResult = list.get(0).get("expectedResult");
-		pageLogin.filter(0, list);
+		this.description = "Login with correct username and password";
+		pageLogin.filter(0, list, true, false);
 		driver.close();
 		
 
@@ -266,7 +328,11 @@ public class Tests {
 			
 		}
 		System.out.println("Tests/tearDown/TC Num:"+row);
+
+			
 		this.tcResult(result);
+			
+		
 		driver.quit();
 
 	}
@@ -302,16 +368,17 @@ public class Tests {
 		LocalDateTime date = LocalDateTime.now();
 		String[] day = {"Day",this.getDateOrTime(date,true)};
 		String[] hour = {"Hour",this.getDateOrTime(date,false)};
-
+		String[] descr = {"Description", this.description};
 		
 		map.put(0, tcName);
-		map.put(1, day);
-		map.put(2, hour);
-		map.put(3, expectedResu);
-		map.put(4, success);
-		map.put(5, message);
-		map.put(6, title);
-		data.insertRowMap(map);
+		map.put(1, descr);
+		map.put(2, day);
+		map.put(3, hour);
+		map.put(4, expectedResu);
+		map.put(5, success);
+		map.put(6, message);
+		map.put(7, title);
+		data.insertRowMap(map, displayTc);
 		
 		
 	}

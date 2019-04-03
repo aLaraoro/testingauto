@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite, 3 failed tests</span>
+      <span class="top-banner-font-1">1 suite</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -38,7 +38,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-testingauto.Tests">
-              <span class="suite-name border-failed">testingauto.Tests</span>
+              <span class="suite-name border-passed">testingauto.Tests</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -91,31 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">8 methods, 3 failed,   5 passed</span>
-                  </li>
-                  <li>
-                    <span class="method-list-title failed">Failed methods</span>
-                    <span class="show-or-hide-methods failed">
-                      <a href="#" panel-name="suite-testingauto.Tests" class="hide-methods failed suite-testingauto.Tests"> (hide)</a> <!-- hide-methods failed suite-testingauto.Tests -->
-                      <a href="#" panel-name="suite-testingauto.Tests" class="show-methods failed suite-testingauto.Tests"> (show)</a> <!-- show-methods failed suite-testingauto.Tests -->
-                    </span>
-                    <div class="method-list-content failed suite-testingauto.Tests">
-                      <span>
-                        <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="registerNoConfirmationPwd">registerNoConfirmationPwd</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="registerNoPwd">registerNoPwd</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="registerNoUser">registerNoUser</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                    </div> <!-- method-list-content failed suite-testingauto.Tests -->
+                    <span class="method-stats">1 method,   1 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -126,27 +102,7 @@
                     <div class="method-list-content passed suite-testingauto.Tests">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="correctLogin">correctLogin</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="loginEmptyBoth">loginEmptyBoth</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="loginEmptyPass">loginEmptyPass</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="loginEmptyUser">loginEmptyUser</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="register">register</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-testingauto.Tests" title="testingauto.Tests" hash-for-method="reserveDefaultFlight">reserveDefaultFlight</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-testingauto.Tests -->
@@ -161,50 +117,6 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-testingauto.Tests" class="panel testingauto.Tests">
-          <div class="suite-testingauto.Tests-class-failed">
-            <div class="main-panel-header rounded-window-top">
-              <img src="failed.png"/>
-              <span class="class-name">testingauto.Tests</span>
-            </div> <!-- main-panel-header rounded-window-top -->
-            <div class="main-panel-content rounded-window-bottom">
-              <div class="method">
-                <div class="method-content">
-                  <a name="registerNoConfirmationPwd">
-                  </a> <!-- registerNoConfirmationPwd -->
-                  <span class="method-name">registerNoConfirmationPwd</span>
-                  <div class="stack-trace">java.lang.AssertionError: User with: No confirmation password is properly registered expected [false] but found [true]
-	at assertpage.AssertPages.assertRegister(AssertPages.java:55)
-	at testingauto.Tests.registerNoConfirmationPwd(Tests.java:181)
-... Removed 37 stack frames
-</div> <!-- stack-trace -->
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="registerNoPwd">
-                  </a> <!-- registerNoPwd -->
-                  <span class="method-name">registerNoPwd</span>
-                  <div class="stack-trace">java.lang.AssertionError: User with: No password is properly registered expected [false] but found [true]
-	at assertpage.AssertPages.assertRegister(AssertPages.java:55)
-	at testingauto.Tests.registerNoPwd(Tests.java:164)
-... Removed 37 stack frames
-</div> <!-- stack-trace -->
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="registerNoUser">
-                  </a> <!-- registerNoUser -->
-                  <span class="method-name">registerNoUser</span>
-                  <div class="stack-trace">java.lang.AssertionError: User with: No username is properly registered expected [false] but found [true]
-	at assertpage.AssertPages.assertRegister(AssertPages.java:55)
-	at testingauto.Tests.registerNoUser(Tests.java:145)
-... Removed 37 stack frames
-</div> <!-- stack-trace -->
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-            </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-testingauto.Tests-class-failed -->
           <div class="suite-testingauto.Tests-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
@@ -213,37 +125,9 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="correctLogin">
-                  </a> <!-- correctLogin -->
-                  <span class="method-name">correctLogin</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="loginEmptyBoth">
-                  </a> <!-- loginEmptyBoth -->
-                  <span class="method-name">loginEmptyBoth</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="loginEmptyPass">
-                  </a> <!-- loginEmptyPass -->
-                  <span class="method-name">loginEmptyPass</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="loginEmptyUser">
-                  </a> <!-- loginEmptyUser -->
-                  <span class="method-name">loginEmptyUser</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="register">
-                  </a> <!-- register -->
-                  <span class="method-name">register</span>
+                  <a name="reserveDefaultFlight">
+                  </a> <!-- reserveDefaultFlight -->
+                  <span class="method-name">reserveDefaultFlight</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -299,44 +183,16 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(8);
+data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'register')
+data.setCell(0, 1, 'reserveDefaultFlight')
 data.setCell(0, 2, 'testingauto.Tests')
-data.setCell(0, 3, 283284);
-data.setCell(1, 0, 1)
-data.setCell(1, 1, 'registerNoConfirmationPwd')
-data.setCell(1, 2, 'testingauto.Tests')
-data.setCell(1, 3, 195609);
-data.setCell(2, 0, 2)
-data.setCell(2, 1, 'registerNoUser')
-data.setCell(2, 2, 'testingauto.Tests')
-data.setCell(2, 3, 129304);
-data.setCell(3, 0, 3)
-data.setCell(3, 1, 'registerNoPwd')
-data.setCell(3, 2, 'testingauto.Tests')
-data.setCell(3, 3, 25261);
-data.setCell(4, 0, 4)
-data.setCell(4, 1, 'correctLogin')
-data.setCell(4, 2, 'testingauto.Tests')
-data.setCell(4, 3, 23200);
-data.setCell(5, 0, 5)
-data.setCell(5, 1, 'loginEmptyBoth')
-data.setCell(5, 2, 'testingauto.Tests')
-data.setCell(5, 3, 3013);
-data.setCell(6, 0, 6)
-data.setCell(6, 1, 'loginEmptyPass')
-data.setCell(6, 2, 'testingauto.Tests')
-data.setCell(6, 3, 2341);
-data.setCell(7, 0, 7)
-data.setCell(7, 1, 'loginEmptyUser')
-data.setCell(7, 2, 'testingauto.Tests')
-data.setCell(7, 3, 2164);
+data.setCell(0, 3, 63233);
 window.suiteTableData['testingauto.Tests']= { tableData: data, tableDiv: 'times-div-testingauto.Tests'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 11 minutes</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-testingauto.Tests">
               </div> <!-- times-div-testingauto.Tests -->
             </div> <!-- times-div -->
@@ -368,102 +224,12 @@ return data;
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
-                <span class="method-name">correctLogin</span>
-                <span class="method-start">31262 ms</span>
+                <span class="method-name">reserveDefaultFlight</span>
+                <span class="method-start">15272 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=correctLogin status=SUCCESS method=Tests.correctLogin()[pri:0, instance:testingauto...)</span>
-                <span class="method-start">54462 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">59001 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <span class="method-name">loginEmptyBoth</span>
-                <span class="method-start">67090 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=loginEmptyBoth status=SUCCESS method=Tests.loginEmptyBoth()[pri:0, instance:testing...)</span>
-                <span class="method-start">70103 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">70839 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <span class="method-name">loginEmptyPass</span>
-                <span class="method-start">78164 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=loginEmptyPass status=SUCCESS method=Tests.loginEmptyPass()[pri:0, instance:testing...)</span>
-                <span class="method-start">80505 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">81245 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <span class="method-name">loginEmptyUser</span>
-                <span class="method-start">86649 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=loginEmptyUser status=SUCCESS method=Tests.loginEmptyUser()[pri:0, instance:testing...)</span>
-                <span class="method-start">88813 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">89591 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <span class="method-name">register</span>
-                <span class="method-start">99228 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=register status=SUCCESS method=Tests.register()[pri:0, instance:testingauto.Tests@2...)</span>
-                <span class="method-start">382512 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">383233 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">registerNoConfirmationPwd</span>
-                <span class="method-start">393068 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=registerNoConfirmationPwd status=FAILURE method=Tests.registerNoConfirmationPwd()[p...)</span>
-                <span class="method-start">588722 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">590265 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">registerNoPwd</span>
-                <span class="method-start">600294 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=registerNoPwd status=FAILURE method=Tests.registerNoPwd()[pri:0, instance:testingau...)</span>
-                <span class="method-start">625555 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-method before">
-                <span class="method-name">setUp</span>
-                <span class="method-start">627560 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">registerNoUser</span>
-                <span class="method-start">637806 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">tearDown([TestResult name=registerNoUser status=FAILURE method=Tests.registerNoUser()[pri:0, instance:testing...)</span>
-                <span class="method-start">767111 ms</span>
+                <span class="method-name">tearDown([TestResult name=reserveDefaultFlight status=SUCCESS method=Tests.reserveDefaultFlight()[pri:0, inst...)</span>
+                <span class="method-start">78506 ms</span>
               </div> <!-- configuration-method after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

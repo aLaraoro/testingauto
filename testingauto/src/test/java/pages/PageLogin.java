@@ -69,11 +69,9 @@ public class PageLogin {
 		
 		tabs = new ArrayList<String> (driver.getWindowHandles());
 		for(int j=0;j<tabs.size();j++) {
-			String usernameList = list.get(j).get(username);
-			String passList = list.get(j).get(pass);
+
 			driver.switchTo().window(tabs.get(j));
-			this.loginPage();
-			this.login(usernameList, passList);
+			this.filter(j, list, true, false);
 
 		}
 		
@@ -94,16 +92,26 @@ public class PageLogin {
 	}
 	
 	
-	public void filter(Integer a, List<Map<String,String>> list) throws InterruptedException {
+	public void filter(Integer a, List<Map<String,String>> list, Boolean isSigOn, Boolean reservate) throws InterruptedException {
 		
 		Map<String,String> map = list.get(a);
 		Boolean bool = Boolean.parseBoolean(map.get("assert"));
-		loginPage();
+		if(isSigOn) {
+			
+			loginPage();
+		
+		}
 		this.login(map.get("userName"), map.get("password"));
 		driver.findElement(loginButton).click();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		AssertPages assertPages = new AssertPages(driver);
-		assertPages.correctOrIncorrect(bool,map.get("expectedResult"));
+		
+		if(!reservate) {
+			
+			AssertPages assertPages = new AssertPages(driver);
+			assertPages.correctOrIncorrect(bool,map.get("expectedResult"));
+			
+		}
+		
 		
 		
 	}
@@ -126,22 +134,6 @@ public class PageLogin {
 		driver.findElement(pwdField).sendKeys(pass);
 
 
-	}
-	
-	public void fields_login(String user, String pass) {
-		
-		List<WebElement> loginFields = driver.findElements(fields);
-		loginFields.get(1).sendKeys(user);
-		loginFields.get(1).sendKeys(pass);
-		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-	}
-	
-	public void verifyFields() {
-		
-		List<WebElement> loginFields = driver.findElements(fields);
-		System.out.println(loginFields.size());
-		Assert.assertTrue(loginFields.size()==5, "El tamaño de la lista es diferente a 5");
-		
 	}
 
 

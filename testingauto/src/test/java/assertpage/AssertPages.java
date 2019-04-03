@@ -45,6 +45,22 @@ public class AssertPages {
 
 	}
 	
+	public void assertFlights(Boolean bool, String condition) {
+		
+		if(bool) {
+			
+			Assert.assertTrue(driver.findElement(reservationTitle).getText().contains(condition),"Expected Result: " + condition + ". Page: " + driver.getTitle());
+			
+		}else {
+			
+			Assert.assertTrue(driver.getCurrentUrl().contains("index.php"), "Expected Result: " + condition + ". Page: " + driver.getTitle());
+		
+		}
+		
+		
+	}
+	
+	
 	public void assertRegister(Boolean bool, String condition) {
 		
 		if(bool) {
@@ -52,7 +68,9 @@ public class AssertPages {
 			Assert.assertTrue(driver.findElement(signOff).getText().contains("SIGN-OFF"), "User is not registered");
 			
 		}else {
-		Assert.assertFalse(driver.findElement(signOff).getText().contains("SIGN-OFF"), "User with: " + condition + " is properly registered");
+			
+			Assert.assertFalse(driver.findElement(signOff).getText().contains("SIGN-OFF"), "User with: " + condition + " is properly registered");
+			
 		}
 		
 		

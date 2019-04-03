@@ -2,6 +2,7 @@ package data;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -133,16 +134,12 @@ public class Data {
 
 
 	}
-
-	public void insertRowMap(Map<Integer,String[]> map) throws IOException {
-
+	
+	public Workbook cloneData() throws FileNotFoundException {
+		
 		Workbook newWorkBook = new XSSFWorkbook();
 		int numSheets = workbook.getNumberOfSheets();
 
-		DataFormatter dataFormatter = new DataFormatter();
-		FileOutputStream output = new FileOutputStream(data);
-		Sheet sheet = null;
-		List<String> list =  this.toList(map, 1);
 		for(int i=0;i<numSheets;i++) {
 
 			newWorkBook.createSheet();
@@ -153,28 +150,42 @@ public class Data {
 			createSheetContent(i,oldSheet,sheet1);
 
 		}
+		
+		return newWorkBook;
+		
+	}
+	
 
-		if(numSheets<2) {
+	public void insertRowMap(Map<Integer,String[]> map,Boolean bool) throws IOException {
 
-			newWorkBook.createSheet("Result");
+		Workbook newWorkBook = this.cloneData();
+		int numSheets = newWorkBook.getNumberOfSheets();
+		DataFormatter dataFormatter = new DataFormatter();
+		FileOutputStream output = new FileOutputStream(data);
+		Sheet sheet = null;
+		List<String> list =  this.toList(map, 1);
+		
+		if(bool) {
+			
+			if(numSheets<2) {
 
-			sheet = newWorkBook.getSheetAt(1);
-
-			List<String> names = this.toList(map, 0);
-
-			this.createRow(0, names, sheet);
-			this.createRow(1, list, sheet);
-
+				newWorkBook.createSheet("Result");
+				sheet = newWorkBook.getSheetAt(1);
+				List<String> names = this.toList(map, 0);
+				this.createRow(0, names, sheet);
+				this.createRow(1, list, sheet);
 
 
-		}else {
 
-			sheet = newWorkBook.getSheetAt(1);
-			int n = sheet.getLastRowNum();
-			this.createRow(n+1, list, sheet);
+			}else {
 
+				sheet = newWorkBook.getSheetAt(1);
+				int n = sheet.getLastRowNum();
+				this.createRow(n+1, list, sheet);
+
+			}
+			
 		}
-
 
 		newWorkBook.write(output);
 		output.close();
@@ -206,15 +217,7 @@ public class Data {
 
 			}
 
-
-
-
 		}
-
-
-
-
-
 
 	}
 
@@ -232,12 +235,25 @@ public class Data {
 		}
 
 
-
-
-
 		return list;
 
 
+	}
+	
+	
+	public void createSheetFlights() throws FileNotFoundException {
+		
+		Workbook newWorkBook = this.cloneData();
+		int numSheets = newWorkBook.getNumberOfSheets();
+	
+		if(numSheets<3) {
+			
+			newWorkBook.createSheet("Flights");
+			Sheet sheet = newWorkBook.getSheet("Flights");
+			
+		}
+
+		
 	}
 
 
@@ -261,7 +277,7 @@ public class Data {
 			int widt=0;
 			String cellValue =  arrayList.get(i);
 			//Get value and insert into cell
-			if(a>0 && (i>0 && i<3)) {
+			if(a>0 && (i>1 && i<4)) {
 
 
 				//DateTime values
