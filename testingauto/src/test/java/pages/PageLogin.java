@@ -24,6 +24,7 @@ import org.testng.Assert;
 
 import assertpage.AssertPages;
 import data.Data;
+import helpers.Helpers;
 
 
 public class PageLogin {
@@ -103,7 +104,7 @@ public class PageLogin {
 		}
 		this.login(map.get("userName"), map.get("password"));
 		driver.findElement(loginButton).click();
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		if(!reservate) {
 			
@@ -130,8 +131,13 @@ public class PageLogin {
 		System.out.println(pass);
 
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		
+		
+		
 		driver.findElement(userField).sendKeys(user);
 		driver.findElement(pwdField).sendKeys(pass);
+
+
 
 
 	}

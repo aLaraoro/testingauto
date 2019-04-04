@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import assertpage.AssertPages;
+import helpers.Helpers;
 
 public class PageReservation {
 
@@ -32,6 +33,8 @@ public class PageReservation {
 	private By airline;
 	private By flights;
 	private By findFlights;
+	private String rowFly;
+	private Helpers helpers; 
 
 	public PageReservation(WebDriver driver) {
 
@@ -51,8 +54,8 @@ public class PageReservation {
 		airline = By.name("airline");
 		findFlights = By.name("findFlights");
 		
-		
 		flights = By.partialLinkText("Flights");
+		rowFly= ".//b/font[text()='PATH']/ancestor::tbody[2]/tr";
 	}
 	
 	public void reservationLogin(Boolean bool,String condition) {
@@ -86,13 +89,56 @@ public class PageReservation {
 		
 	}
 	
+	public List<Map<String,String>> flightsData(String place,String destination, String date) {
+		
+		String flyRow = rowFly.replace("PATH", place);
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		List<WebElement> rowElements = driver.findElements(By.xpath(flyRow));
+		System.out.println(rowElements.size());
+		
+		rowElements.remove(1);
+		rowElements.remove(0);
+		int rows = rowElements.size()/2;
+		
+		for(int i=0;i<rows;i++) {
+			int num = 3+2*i;
+			int b = 4+2*i;
+			System.out.println(num);
+			
+			Map<String,String> map = new HashMap<String,String>();
+			
+			
+			
+			String pathName1 = flyRow + "[" + num + "]/td[2]/font/b";
+			String pathName2 = flyRow + "[" + num + "]/td[3]/font";
+			String pathName3 = flyRow + "[" + b + "]/td/font/font/b";
+			String data = driver.findElement(By.xpath(pathName1)).getText();
+			String time = driver.findElement(By.xpath(pathName2)).getText();
+			String priceTag = driver.findElement(By.xpath(pathName3)).getText();
+			
+			String price = priceTag.substring(priceTag.indexOf("$")+1, priceTag.length());
+			map.put("Destination", destination);
+			map.put("Day", date);
+			map.put("Airline", data);
+			map.put("Time", time);
+			map.put("Price", price);
+			System.out.println("Flight: " +data + ". Depart: " +time + ". Price: " + price);
+			list.add(map);
+		
+		}
+		
+		return list;
+		
+	}
+	
 	public void bookFlight(Map<String,String[]> flyDetails) {
 
+		
 		for(Map.Entry<String, String[]> entry : flyDetails.entrySet()) {
 			String key = entry.getKey();
 			String type = entry.getValue()[1];
 			String value = entry.getValue()[0];
-			System.out.println("Key = " + entry.getKey() + ", Value = " + value + ". Type = " + type);
+			//System.out.println("Key = " + entry.getKey() + ", Value = " + value + ". Type = " + type);
 			
 			if(type.equalsIgnoreCase("drop")) {
 				
@@ -131,9 +177,7 @@ public class PageReservation {
 	
 	
 	public Map<String,String[]> getDetails(){
-		String type = driver.findElement(tripType).getAttribute("value");
-		System.out.println(type);
-		
+		System.out.println("Get Details");
 		String[] tripTypeArr = {driver.findElement(tripType).getAttribute("value"),"radio"};
 		String[] passCountArr = {driver.findElement(passCount).getAttribute("value"),"drop"};
 		String[] fromPortArr = {driver.findElement(fromPort).getAttribute("value"),"drop"};

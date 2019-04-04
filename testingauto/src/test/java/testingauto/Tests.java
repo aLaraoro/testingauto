@@ -9,7 +9,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.Temporal;
+import java.time.temporal.TemporalField;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +28,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
@@ -58,20 +61,19 @@ public class Tests {
 	
 	@BeforeMethod
 	public void setUp() throws IOException, Exception, InvalidFormatException {
-		
-		
+
+		System.out.println("Set up content");
 		//Data
 		data = new Data("./data.xlsx");
 		list = data.getData();
 		//autoLogin = data.autoList(loginList, 5);
 
 		DesiredCapabilities caps = new DesiredCapabilities();				
-		
 		//Inicia driver
 		String exePath = "Chrome Driver\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", exePath);
 		driver = new ChromeDriver();
-       
+		driver.manage().deleteAllCookies();
 		driver.navigate().to("http://newtours.demoaut.com/");
 
 
@@ -117,33 +119,79 @@ public class Tests {
 		
 	}*/
 	
+	
+	@Test
+	public void compareTwoFlights() throws InterruptedException {
+		
+		System.out.println("Login and book");
+		displayTc = false;
+		PageLogin pageLogin = new PageLogin(driver);
+		PageReservation pageReservation = new PageReservation(driver);
+		pageLogin.filter(0, list, false, true);
+		
+		
+		Map<String,String[]> details = pageReservation.getDetails();
+		
+		pageReservation.bookFlight(details);
+		
+		List<String> confirmList = new ArrayList<String>();
+		
+		String fromDate = details.get("fromMonth")[0] + "/" + details.get("fromDay")[0] + "/2019";
+		String toDate = details.get("toMonth")[0] + "/" + details.get("toDay")[0] + "/2019";
+		
+		String from = details.get("fromPort")[0] + " to " + details.get("toPort")[0];
+		String to = details.get("toPort")[0] + " to " + details.get("fromPort")[0];
+		
+		confirmList.add(0,from);
+		confirmList.add(1,to);
+		confirmList.add(2,fromDate);
+		confirmList.add(3,toDate);
+		AssertPages assertPages = new AssertPages(driver);
+		Boolean departAssert = assertPages.assertSelectFlight(confirmList, "DEPART",0);
+		Boolean returnAssert = assertPages.assertSelectFlight(confirmList, "RETURN",1);
+		
+		Assert.assertTrue((departAssert&&returnAssert));
+		
+		List<Map<String,String>> departureList = pageReservation.flightsData("DEPART",from,fromDate);
+		List<Map<String,String>> returnList =pageReservation.flightsData("RETURN", to,toDate);
+		System.out.println("Departure List size: "+departureList.size());
+		System.out.println("Return List size: "+returnList.size());
+		driver.close();
+		
+		
+	}
+	
 	@Test
 	public void reserveDefaultFlight() throws InterruptedException {
 		
 		System.out.println("Login and book");
 		displayTc = false;
 		PageLogin pageLogin = new PageLogin(driver);
+		PageReservation pageReservation = new PageReservation(driver);
 		pageLogin.filter(0, list, false, true);
 		
-		PageReservation pageReservation = new PageReservation(driver);
+		
 		Map<String,String[]> details = pageReservation.getDetails();
 		
 		pageReservation.bookFlight(details);
 		
 		List<String> confirmList = new ArrayList<String>();
-		String fromPort = details.get("fromPort")[0];
+		
 		String fromDate = details.get("fromMonth")[0] + "/" + details.get("fromDay")[0] + "/2019";
-		String toPort = details.get("toPort")[0];
 		String toDate = details.get("toMonth")[0] + "/" + details.get("toDay")[0] + "/2019";
 		
-		String from = fromPort + " to " + toPort;
-		String to = toPort + " to " + fromPort;
+		String from = details.get("fromPort")[0] + " to " + details.get("toPort")[0];
+		String to = details.get("toPort")[0] + " to " + details.get("fromPort")[0];
+		
 		confirmList.add(0,from);
 		confirmList.add(1,to);
 		confirmList.add(2,fromDate);
 		confirmList.add(3,toDate);
 		AssertPages assertPages = new AssertPages(driver);
-		assertPages.assertSelectFlight(confirmList);
+		Boolean departAssert = assertPages.assertSelectFlight(confirmList, "DEPART",0);
+		Boolean returnAssert = assertPages.assertSelectFlight(confirmList, "RETURN",1);
+		
+		Assert.assertTrue((departAssert&&returnAssert));
 		
 		driver.close();
 		
@@ -345,9 +393,13 @@ public class Tests {
 			
 		}
 		System.out.println("Tests/tearDown/TC Num:"+row);
-
+		if(displayTc) {
 			
-		this.tcResult(result);
+			this.tcResult(result);
+			
+		}
+			
+		
 			
 		
 		driver.quit();
@@ -395,7 +447,7 @@ public class Tests {
 		map.put(5, success);
 		map.put(6, message);
 		map.put(7, title);
-		data.insertRowMap(map, displayTc);
+		data.insertRowMap(map);
 		
 		
 	}

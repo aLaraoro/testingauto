@@ -156,7 +156,7 @@ public class Data {
 	}
 	
 
-	public void insertRowMap(Map<Integer,String[]> map,Boolean bool) throws IOException {
+	public void insertRowMap(Map<Integer,String[]> map) throws IOException {
 
 		Workbook newWorkBook = this.cloneData();
 		int numSheets = newWorkBook.getNumberOfSheets();
@@ -165,12 +165,11 @@ public class Data {
 		Sheet sheet = null;
 		List<String> list =  this.toList(map, 1);
 		
-		if(bool) {
 			
 			if(numSheets<2) {
 
 				newWorkBook.createSheet("Result");
-				sheet = newWorkBook.getSheetAt(1);
+				sheet = newWorkBook.getSheet("Result");
 				List<String> names = this.toList(map, 0);
 				this.createRow(0, names, sheet);
 				this.createRow(1, list, sheet);
@@ -179,13 +178,12 @@ public class Data {
 
 			}else {
 
-				sheet = newWorkBook.getSheetAt(1);
+				sheet = newWorkBook.getSheet("Result");
 				int n = sheet.getLastRowNum();
 				this.createRow(n+1, list, sheet);
 
 			}
 			
-		}
 
 		newWorkBook.write(output);
 		output.close();

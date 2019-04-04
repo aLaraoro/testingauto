@@ -28,23 +28,25 @@ public class AssertPages {
 		reservationTitle = By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/font");
 		logonOn = By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[3]/td/p/font/b");
 		signOff = By.xpath("/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td[1]/a");
-		flyPath = ".//b/font[text()='PATH']//following::font[contains(text(),'String')]//preceding::td[1]";
+		flyPath = ".//b/font[text()='PATH']/ancestor::tbody[1]/tr[2]";
+	String n = "/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[5]/td/form/table[1]/tbody/tr[1]/td/table/tbody/tr[1]/td[1]/font/b/font";
+
 	}
 	
 	
-	public void assertSelectFlight(List<String> confirmList) {
-		String departure = confirmList.get(0);
-		String to = confirmList.get(1);
-		System.out.println(flyPath);
-		System.out.println("Departure: "+flyPath.replace("PATH", "DEPART").replace("String", departure));
-		depart = By.xpath(flyPath.replace("PATH", "DEPART").replace("String", departure));
-		toPort = By.xpath(flyPath.replace("PATH", "RETURN").replace("String", to));
+	public Boolean assertSelectFlight(List<String> confirmList, String place, int num) {
 		
-		List<WebElement> elements = driver.findElements(depart);
-		WebElement elem = elements.get(0);
-		String from = elem.getText();
-		System.out.println("Departure: "+elements.size());
+		Boolean bool = false;
 		
+		String name = confirmList.get(num) + " " + confirmList.get(num+2);
+		String path = flyPath.replace("PATH", place);
+		
+		List<WebElement> elements = driver.findElements(By.xpath(path));
+		
+		String elemText = elements.get(0).getText();
+		bool = elemText.equalsIgnoreCase(name);
+
+		return bool;
 	}
 
 
