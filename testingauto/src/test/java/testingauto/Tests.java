@@ -66,6 +66,7 @@ public class Tests {
 		System.out.println("Set up content");
 		//Data
 		data = new Data("./data.xlsx");
+		
 		list = data.getData();
 		//autoLogin = data.autoList(loginList, 5);
 
