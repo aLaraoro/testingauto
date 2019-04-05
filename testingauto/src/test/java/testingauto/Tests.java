@@ -59,6 +59,7 @@ public class Tests {
 	
 	ArrayList<String> tabs;
 	
+	
 	@BeforeMethod
 	public void setUp() throws IOException, Exception, InvalidFormatException {
 
