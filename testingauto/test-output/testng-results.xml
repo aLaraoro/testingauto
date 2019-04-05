@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="108561" started-at="2019-04-04T14:21:23Z" finished-at="2019-04-04T14:23:12Z">
+  <suite name="Default suite" duration-ms="105848" started-at="2019-04-04T15:58:23Z" finished-at="2019-04-04T16:00:09Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="108561" started-at="2019-04-04T14:21:23Z" finished-at="2019-04-04T14:23:12Z">
+    <test name="Default test" duration-ms="105848" started-at="2019-04-04T15:58:23Z" finished-at="2019-04-04T16:00:09Z">
       <class name="testingauto.Tests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:testingauto.Tests@6d4b1c02]" name="setUp" is-config="true" duration-ms="6424" started-at="2019-04-04T14:21:23Z" finished-at="2019-04-04T14:21:30Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:testingauto.Tests@6d4b1c02]" name="setUp" is-config="true" duration-ms="29460" started-at="2019-04-04T15:58:24Z" finished-at="2019-04-04T15:58:53Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="reserveDefaultFlight()[pri:0, instance:testingauto.Tests@6d4b1c02]" name="reserveDefaultFlight" duration-ms="101528" started-at="2019-04-04T14:21:30Z" finished-at="2019-04-04T14:23:11Z">
+        <test-method status="PASS" signature="compareTwoFlights()[pri:0, instance:testingauto.Tests@6d4b1c02]" name="compareTwoFlights" duration-ms="25509" started-at="2019-04-04T15:58:53Z" finished-at="2019-04-04T15:59:19Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- compareTwoFlights -->
+        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:testingauto.Tests@6d4b1c02]" name="tearDown" is-config="true" duration-ms="750" started-at="2019-04-04T15:59:19Z" finished-at="2019-04-04T15:59:19Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=compareTwoFlights status=SUCCESS method=Tests.compareTwoFlights()[pri:0, instance:testingauto.Tests@6d4b1c02] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:testingauto.Tests@6d4b1c02]" name="setUp" is-config="true" duration-ms="13345" started-at="2019-04-04T15:59:19Z" finished-at="2019-04-04T15:59:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="reserveDefaultFlight()[pri:0, instance:testingauto.Tests@6d4b1c02]" name="reserveDefaultFlight" duration-ms="35094" started-at="2019-04-04T15:59:33Z" finished-at="2019-04-04T16:00:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- reserveDefaultFlight -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:testingauto.Tests@6d4b1c02]" name="tearDown" is-config="true" duration-ms="561" started-at="2019-04-04T14:23:11Z" finished-at="2019-04-04T14:23:12Z">
+        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:testingauto.Tests@6d4b1c02]" name="tearDown" is-config="true" duration-ms="1492" started-at="2019-04-04T16:00:08Z" finished-at="2019-04-04T16:00:09Z">
           <params>
             <param index="0">
               <value>
